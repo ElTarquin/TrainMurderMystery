@@ -4,10 +4,13 @@ import dev.doctor4t.trainmurdermystery.block.SmallDoorBlock;
 import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -30,17 +33,22 @@ public class RoomKeyItem extends Item {
             if (world.getBlockEntity(lowerPos) instanceof SmallDoorBlockEntity entity) {
                 // Sneaking creative player with key sets the door to require a key with the same name
                 ItemStack mainHandStack = player.getMainHandStack();
-                if (player.isCreative() && player.isSneaking()) {
-                    System.out.println(mainHandStack.getName().getString());
-                    entity.setKeyName(mainHandStack.getName().getString());
-                    return ActionResult.SUCCESS;
-                } else {
-                    if (mainHandStack.getName().getString().equals(entity.getKeyName())) {
-                        SmallDoorBlock.toggleDoor(state, world, entity, lowerPos);
+                LoreComponent loreComponent = mainHandStack.get(DataComponentTypes.LORE);
+                if (loreComponent != null) {
+                    String roomName = loreComponent.lines().getFirst().getString();
+                    if (player.isCreative() && player.isSneaking()) {
+                        entity.setKeyName(roomName);
                         return ActionResult.SUCCESS;
-                    } else if (world.isClient) {
-                        player.sendMessage(Text.translatable("tip.door.requires_different_key"), true);
-                        return ActionResult.FAIL;
+                    } else {
+                        System.out.println(roomName);
+                        System.out.println(entity.getKeyName());
+                        if (roomName.equals(entity.getKeyName()) || entity.getKeyName().equals("")) {
+                            SmallDoorBlock.toggleDoor(state, world, entity, lowerPos);
+                            return ActionResult.SUCCESS;
+                        } else if (world.isClient) {
+                            player.sendMessage(Text.translatable("tip.door.requires_different_key"), true);
+                            return ActionResult.FAIL;
+                        }
                     }
                 }
             }

@@ -1,5 +1,7 @@
 package dev.doctor4t.trainmurdermystery.block_entity;
 
+import dev.doctor4t.trainmurdermystery.block.DoorPartBlock;
+import dev.doctor4t.trainmurdermystery.block.SmallDoorBlock;
 import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -21,6 +23,9 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
 
     private String keyName = "";
 
+    public static final int MAX_CLOSE_TIME = 100; // 5s
+    private int closeCountdown = 0;
+
     public DoorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.open = state.get(Properties.OPEN);
@@ -30,6 +35,17 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
 
     public static <T extends DoorBlockEntity> void clientTick(World world, BlockPos pos, BlockState state, T entity) {
         entity.age++;
+    }
+
+    public static <T extends DoorBlockEntity> void serverTick(World world, BlockPos pos, BlockState state, T entity) {
+        if(state.get(DoorPartBlock.OPEN)) {
+            entity.setCloseCountdown(entity.getCloseCountdown()-1);
+            if (entity.getCloseCountdown() <= 0) {
+                SmallDoorBlock.toggleDoor(state, world, (SmallDoorBlockEntity) entity, pos);
+            }
+        } else {
+            entity.setCloseCountdown(0);
+        }
     }
 
     public void toggle(boolean silent) {
@@ -48,6 +64,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
             this.lastUpdate = this.world.getTime();
             this.open = !this.open;
             this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.open ? 1 : 0);
+            this.closeCountdown = this.open ? MAX_CLOSE_TIME : 0;
         }
     }
 
@@ -95,6 +112,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
         super.writeNbt(nbt, registryLookup);
         nbt.putBoolean("open", this.isOpen());
         nbt.putString("keyName", this.getKeyName());
+        nbt.putInt("closeCountdown", this.getCloseCountdown());
     }
 
     @Override
@@ -102,6 +120,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
         super.readNbt(nbt, registryLookup);
         this.setOpen(nbt.getBoolean("open"));
         this.setKeyName(nbt.getString("keyName"));
+        this.setCloseCountdown(nbt.getInt("closeCountdown"));
     }
 
     public String getKeyName() {
@@ -110,5 +129,13 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
 
     public void setKeyName(String string) {
         this.keyName = string;
+    }
+
+    public int getCloseCountdown() {
+        return closeCountdown;
+    }
+
+    public void setCloseCountdown(int closeCountdown) {
+        this.closeCountdown = closeCountdown;
     }
 }

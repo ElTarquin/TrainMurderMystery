@@ -74,7 +74,7 @@ public abstract class DoorPartBlock extends BlockWithEntity {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? validateTicker(type, this.getBlockEntityType(), DoorBlockEntity::clientTick) : null;
+        return world.isClient ? validateTicker(type, this.getBlockEntityType(), DoorBlockEntity::clientTick) : validateTicker(type, this.getBlockEntityType(), DoorBlockEntity::serverTick);
     }
 
     protected abstract BlockEntityType<? extends DoorBlockEntity> getBlockEntityType();

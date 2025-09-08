@@ -134,23 +134,26 @@ public class SmallDoorBlock extends DoorPartBlock {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (player.isCreative()) {
-            if (world.isClient) {
-                return ActionResult.SUCCESS;
-            }
-            BlockPos lowerPos = state.get(HALF) == DoubleBlockHalf.LOWER ? pos : pos.down();
-            if (world.getBlockEntity(lowerPos) instanceof SmallDoorBlockEntity entity) {
+        BlockPos lowerPos = state.get(HALF) == DoubleBlockHalf.LOWER ? pos : pos.down();
+        if (world.getBlockEntity(lowerPos) instanceof SmallDoorBlockEntity entity) {
+            if (player.isCreative()) {
+                if (world.isClient) return ActionResult.SUCCESS;
                 toggleDoor(state, world, entity, lowerPos);
-            }
-            return ActionResult.CONSUME;
-        } else {
-            if (world.isClient && !player.getMainHandStack().isOf(TrainMurderMysteryItems.ROOM_KEY)) {
-                player.sendMessage(Text.translatable("tip.door.requires_key"), true);
-                return ActionResult.FAIL;
-            }
+                return ActionResult.CONSUME;
+            } else {
+                if (!entity.getKeyName().equals("") || !player.getMainHandStack().isOf(TrainMurderMysteryItems.ROOM_KEY)) {
+                    if (world.isClient) player.sendMessage(Text.translatable("tip.door.requires_key"), true);
 
-            return ActionResult.PASS;
+                    return ActionResult.FAIL;
+                } else {
+                    if (world.isClient) return ActionResult.SUCCESS;
+                    toggleDoor(state, world, entity, lowerPos);
+                    return ActionResult.CONSUME;
+                }
+            }
         }
+
+        return ActionResult.PASS;
     }
 
     public static void toggleDoor(BlockState state, World world, SmallDoorBlockEntity entity, BlockPos lowerPos) {
@@ -163,19 +166,8 @@ public class SmallDoorBlock extends DoorPartBlock {
                 && world.getBlockEntity(neighborPos) instanceof SmallDoorBlockEntity neighborEntity) {
             neighborEntity.toggle(true);
         }
-
-        // schedule doors to automatically close 5s after being opened
-        if (state.get(OPEN)) {
-            world.scheduleBlockTick(lowerPos, state.getBlock(), 100);
-        }
     }
 
-    @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        super.scheduledTick(state, world, pos, random);
 
-        if (state.get(OPEN) && world.getBlockEntity(pos) instanceof SmallDoorBlockEntity entity) {
-            toggleDoor(state, world, entity, pos);
-        }
-    }
+
 }

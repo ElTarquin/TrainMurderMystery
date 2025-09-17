@@ -1,9 +1,8 @@
 package dev.doctor4t.trainmurdermystery.item;
 
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
-import dev.doctor4t.trainmurdermystery.game.GameConstants;
-import dev.doctor4t.trainmurdermystery.game.GameLoop;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.game.TMMGameLoop;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -30,12 +29,12 @@ public class KnifeItem extends Item {
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (remainingUseTicks < getMaxUseTime(stack, user) - 10 && user instanceof PlayerEntity attacker) {
             HitResult collision = ProjectileUtil.getCollision(attacker, entity -> entity.isAlive() && entity.isAttackable(), 2f);
-            if (collision instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof PlayerEntity killedPlayer && TrainMurderMystery.isPlayerAliveAndSurvival(killedPlayer)) {
-                GameLoop.killPlayer(killedPlayer, true);
+            if (collision instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof PlayerEntity killedPlayer && TMMGameLoop.isPlayerAliveAndSurvival(killedPlayer)) {
+                TMMGameLoop.killPlayer(killedPlayer, true);
 
                 user.swingHand(Hand.MAIN_HAND);
-                killedPlayer.playSound(TrainMurderMysterySounds.ITEM_KNIFE_STAB, 1.0f, 1.0f);
-                if (!attacker.isCreative()) attacker.getItemCooldownManager().set(this, GameConstants.KNIFE_COOLDOWN);
+                killedPlayer.playSound(TMMSounds.ITEM_KNIFE_STAB, 1.0f, 1.0f);
+                if (!attacker.isCreative()) attacker.getItemCooldownManager().set(this, TMMGameConstants.KNIFE_COOLDOWN);
             }
         }
     }
@@ -49,7 +48,7 @@ public class KnifeItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         user.setCurrentHand(hand);
-        user.playSound(TrainMurderMysterySounds.ITEM_KNIFE_PREPARE, 1.0f, 1.0f);
+        user.playSound(TMMSounds.ITEM_KNIFE_PREPARE, 1.0f, 1.0f);
         return TypedActionResult.consume(itemStack);
     }
 }

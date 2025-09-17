@@ -2,7 +2,7 @@ package dev.doctor4t.trainmurdermystery.block_entity;
 
 import dev.doctor4t.trainmurdermystery.block.DoorPartBlock;
 import dev.doctor4t.trainmurdermystery.block.SmallDoorBlock;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryBlockEntities;
+import dev.doctor4t.trainmurdermystery.index.TMMBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -17,11 +17,15 @@ public class SmallDoorBlockEntity extends DoorBlockEntity {
     }
 
     public static SmallDoorBlockEntity createGlass(BlockPos pos, BlockState state) {
-        return new SmallDoorBlockEntity(TrainMurderMysteryBlockEntities.SMALL_GLASS_DOOR, pos, state);
+        return new SmallDoorBlockEntity(TMMBlockEntities.SMALL_GLASS_DOOR, pos, state);
     }
 
     public static SmallDoorBlockEntity createWood(BlockPos pos, BlockState state) {
-        return new SmallDoorBlockEntity(TrainMurderMysteryBlockEntities.SMALL_WOOD_DOOR, pos, state);
+        return new SmallDoorBlockEntity(TMMBlockEntities.SMALL_WOOD_DOOR, pos, state);
+    }
+
+    public static SmallDoorBlockEntity createTrain(BlockPos pos, BlockState state) {
+        return new SmallDoorBlockEntity(TMMBlockEntities.SMALL_TRAIN_DOOR, pos, state);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.mixin.client.scenery;
 
 import dev.doctor4t.trainmurdermystery.client.TrainMurderMysteryClient;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryParticles;
+import dev.doctor4t.trainmurdermystery.index.TMMParticles;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -44,7 +44,7 @@ public abstract class ClientWorldMixin extends World  {
             for (int i = 0; i < 200; i++) {
                 Vec3d pos = new Vec3d(player.getX() - 20f + random.nextFloat(), player.getY() + (random.nextFloat() * 2 - 1) * 10f, player.getZ() + (random.nextFloat() * 2 - 1) * 10f);
                 if (this.client.world.isSkyVisible(BlockPos.ofFloored(pos))) {
-                    this.addParticle(TrainMurderMysteryParticles.SNOWFLAKE, pos.getX(), pos.getY(), pos.getZ(), 2, 0, 0);
+                    this.addParticle(TMMParticles.SNOWFLAKE, pos.getX(), pos.getY(), pos.getZ(), 2, 0, 0);
                 }
             }
         }

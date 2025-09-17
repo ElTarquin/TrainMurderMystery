@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.block_entity;
 
 import dev.doctor4t.trainmurdermystery.block.SprinklerBlock;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryBlockEntities;
+import dev.doctor4t.trainmurdermystery.index.TMMBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -17,7 +17,7 @@ public class SprinklerBlockEntity extends SyncingBlockEntity {
     private boolean powered;
 
     public SprinklerBlockEntity(BlockPos pos, BlockState state) {
-        super(TrainMurderMysteryBlockEntities.SPRINKLER, pos, state);
+        super(TMMBlockEntities.SPRINKLER, pos, state);
         this.setPowered(state.get(SprinklerBlock.POWERED));
     }
 

@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.block;
 
 import dev.doctor4t.trainmurdermystery.block.entity.SeatEntity;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryEntities;
+import dev.doctor4t.trainmurdermystery.index.TMMEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -40,7 +40,7 @@ public abstract class MountableBlock extends Block {
                 return ActionResult.success(true);
             }
 
-            SeatEntity seatEntity = TrainMurderMysteryEntities.SEAT.create(world);
+            SeatEntity seatEntity = TMMEntities.SEAT.create(world);
 
             if (seatEntity == null) {
                 return ActionResult.PASS;

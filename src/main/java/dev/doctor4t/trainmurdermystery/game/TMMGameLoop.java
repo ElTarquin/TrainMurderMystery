@@ -1,11 +1,10 @@
 package dev.doctor4t.trainmurdermystery.game;
 
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
-import dev.doctor4t.trainmurdermystery.cca.TrainMurderMysteryComponents;
+import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.cca.WorldGameComponent;
 import dev.doctor4t.trainmurdermystery.entity.PlayerBodyEntity;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryEntities;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryItems;
+import dev.doctor4t.trainmurdermystery.index.TMMEntities;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,14 +21,14 @@ import net.minecraft.world.GameRules;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
-public class GameLoop {
+public class TMMGameLoop {
     public static void tick(ServerWorld serverWorld) {
-        WorldGameComponent game = TrainMurderMysteryComponents.GAME.get(serverWorld);
+        WorldGameComponent game = TMMComponents.GAME.get(serverWorld);
 
         if (game.isRunning()) {
             // kill players who fell off the train
             for (ServerPlayerEntity player : serverWorld.getPlayers()) {
-                if (TrainMurderMystery.isPlayerAliveAndSurvival(player) && player.getY() < 63) {
+                if (isPlayerAliveAndSurvival(player) && player.getY() < 63) {
                     killPlayer(player, false);
                 }
             }
@@ -63,8 +62,8 @@ public class GameLoop {
     }
 
     public static void startGame(ServerWorld world) {
-        TrainMurderMysteryComponents.TRAIN.get(world).setTrainSpeed(130);
-        WorldGameComponent gameComponent = TrainMurderMysteryComponents.GAME.get(world);
+        TMMComponents.TRAIN.get(world).setTrainSpeed(130);
+        WorldGameComponent gameComponent = TMMComponents.GAME.get(world);
 
         world.getGameRules().get(GameRules.KEEP_INVENTORY).set(true, world.getServer());
         world.getGameRules().get(GameRules.DO_WEATHER_CYCLE).set(false, world.getServer());
@@ -100,10 +99,10 @@ public class GameLoop {
         for (int i = 0; i < hitmanCount; i++) {
             ServerPlayerEntity player = rolePlayerPool.getFirst();
             rolePlayerPool.removeFirst();
-            player.giveItemStack(new ItemStack(TrainMurderMysteryItems.KNIFE));
-            player.giveItemStack(new ItemStack(TrainMurderMysteryItems.LOCKPICK));
+            player.giveItemStack(new ItemStack(TMMItems.KNIFE));
+            player.giveItemStack(new ItemStack(TMMItems.LOCKPICK));
 
-            ItemStack letter = new ItemStack(TrainMurderMysteryItems.LETTER);
+            ItemStack letter = new ItemStack(TMMItems.LETTER);
             letter.set(DataComponentTypes.ITEM_NAME, Text.translatable(letter.getTranslationKey() + ".instructions"));
             player.giveItemStack(letter);
 
@@ -116,10 +115,10 @@ public class GameLoop {
         for (int i = 0; i < detectiveCount; i++) {
             ServerPlayerEntity player = rolePlayerPool.getFirst();
             rolePlayerPool.removeFirst();
-            player.giveItemStack(new ItemStack(TrainMurderMysteryItems.REVOLVER));
-            player.giveItemStack(new ItemStack(TrainMurderMysteryItems.BODY_BAG));
+            player.giveItemStack(new ItemStack(TMMItems.REVOLVER));
+            player.giveItemStack(new ItemStack(TMMItems.BODY_BAG));
 
-            ItemStack letter = new ItemStack(TrainMurderMysteryItems.LETTER);
+            ItemStack letter = new ItemStack(TMMItems.LETTER);
             letter.set(DataComponentTypes.ITEM_NAME, Text.translatable(letter.getTranslationKey() + ".notes"));
             player.giveItemStack(letter);
 
@@ -138,14 +137,14 @@ public class GameLoop {
         // select rooms
         Collections.shuffle(playerPool);
         for (int i = 0; i < playerPool.size(); i++) {
-            ItemStack itemStack = new ItemStack(TrainMurderMysteryItems.KEY);
+            ItemStack itemStack = new ItemStack(TMMItems.KEY);
             int roomNumber = (int) Math.floor((double) (i + 2) / 2);
             itemStack.apply(DataComponentTypes.LORE, LoreComponent.DEFAULT, component -> new LoreComponent(Text.literal("Room "+ roomNumber).getWithStyle(Style.EMPTY.withItalic(false).withColor(0xFF8C00))));
             ServerPlayerEntity player = playerPool.get(i);
             player.giveItemStack(itemStack);
 
             // give pamphlet
-            ItemStack letter = new ItemStack(TrainMurderMysteryItems.LETTER);
+            ItemStack letter = new ItemStack(TMMItems.LETTER);
 
             letter.set(DataComponentTypes.ITEM_NAME, Text.translatable(letter.getTranslationKey() + ".pamphlet"));
             int letterColor = 0xC5AE8B;
@@ -181,7 +180,7 @@ public class GameLoop {
         player.kill();
 
         if (spawnBody) {
-            PlayerBodyEntity body = TrainMurderMysteryEntities.PLAYER_BODY.create(player.getWorld());
+            PlayerBodyEntity body = TMMEntities.PLAYER_BODY.create(player.getWorld());
             body.setPlayerUuid(player.getUuid());
 
             Vec3d spawnPos = player.getPos().add(player.getRotationVector().normalize().multiply(1));
@@ -191,6 +190,10 @@ public class GameLoop {
             body.setHeadYaw(player.getHeadYaw());
             player.getWorld().spawnEntity(body);
         }
+    }
+
+    public static boolean isPlayerAliveAndSurvival(PlayerEntity player) {
+        return player != null && !player.isSpectator() && !player.isCreative();
     }
 
     public enum WinStatus {

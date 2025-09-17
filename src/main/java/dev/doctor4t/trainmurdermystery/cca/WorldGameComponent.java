@@ -5,9 +5,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
@@ -29,7 +27,7 @@ public class WorldGameComponent implements AutoSyncedComponent {
     }
 
     public void sync() {
-        TrainMurderMysteryComponents.GAME.sync(this.world);
+        TMMComponents.GAME.sync(this.world);
     }
 
     public void start() {

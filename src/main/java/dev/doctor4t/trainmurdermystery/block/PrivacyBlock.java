@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.block;
 
 import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryProperties;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.SpyglassItem;
@@ -43,7 +43,7 @@ public interface PrivacyBlock {
             world.setBlockState(pos, state.with(INTERACTION_COOLDOWN, false));
             return;
         } else {
-            world.playSound(null, pos, TrainMurderMysterySounds.BLOCK_PRIVACY_PANEL_TOGGLE, SoundCategory.BLOCKS, 0.1f, opaque ? 1.0f : 1.2f);
+            world.playSound(null, pos, TMMSounds.BLOCK_PRIVACY_PANEL_TOGGLE, SoundCategory.BLOCKS, 0.1f, opaque ? 1.0f : 1.2f);
         }
 
         world.setBlockState(pos, state.with(OPAQUE, opaque).with(INTERACTION_COOLDOWN, true));

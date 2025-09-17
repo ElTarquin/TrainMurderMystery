@@ -3,7 +3,7 @@ package dev.doctor4t.trainmurdermystery.mixin.client.ui;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.client.TrainMurderMysteryClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
     @Shadow @Final private MinecraftClient client;
-    private static final Identifier TMM_HOTBAR_TEXTURE = TrainMurderMystery.id("hud/hotbar");
-    private static final Identifier TMM_HOTBAR_SELECTION_TEXTURE = TrainMurderMystery.id("hud/hotbar_selection");
+    private static final Identifier TMM_HOTBAR_TEXTURE = TMM.id("hud/hotbar");
+    private static final Identifier TMM_HOTBAR_SELECTION_TEXTURE = TMM.id("hud/hotbar_selection");
 
     @WrapMethod(method = "renderStatusBars")
     private void tmm$removeStatusBars(DrawContext context, Operation<Void> original) {

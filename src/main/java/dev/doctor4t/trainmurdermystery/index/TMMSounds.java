@@ -1,12 +1,12 @@
 package dev.doctor4t.trainmurdermystery.index;
 
 import dev.doctor4t.ratatouille.util.registrar.SoundEventRegistrar;
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 
-public interface TrainMurderMysterySounds {
-    SoundEventRegistrar registrar = new SoundEventRegistrar(TrainMurderMystery.MOD_ID);
+public interface TMMSounds {
+    SoundEventRegistrar registrar = new SoundEventRegistrar(TMM.MOD_ID);
 
     BlockSoundGroup VENT_SHAFT = registrar.createBlockSoundGroup("block.vent_shaft", 1f, 1f);
 

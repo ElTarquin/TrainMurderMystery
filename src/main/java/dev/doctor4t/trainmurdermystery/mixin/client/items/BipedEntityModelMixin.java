@@ -1,6 +1,6 @@
 package dev.doctor4t.trainmurdermystery.mixin.client.items;
 
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryItems;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
@@ -22,14 +22,14 @@ public class BipedEntityModelMixin<T extends LivingEntity> {
 
     @Inject(method = "positionRightArm", at = @At("TAIL"))
     private void tmm$holdRevolverRightArm(T entity, CallbackInfo ci) {
-        if (entity.getMainHandStack().isOf(TrainMurderMysteryItems.REVOLVER)) {
+        if (entity.getMainHandStack().isOf(TMMItems.REVOLVER)) {
             holdRevolver(this.rightArm, this.leftArm, this.head, true);
         }
     }
 
     @Inject(method = "positionLeftArm", at = @At("TAIL"))
     private void tmm$tmm$holdRevolverLeftArm(T entity, CallbackInfo ci) {
-        if (entity.getMainHandStack().isOf(TrainMurderMysteryItems.REVOLVER)) {
+        if (entity.getMainHandStack().isOf(TMMItems.REVOLVER)) {
 //            holdRevolver(this.rightArm, this.leftArm, this.head, false);
         }
     }

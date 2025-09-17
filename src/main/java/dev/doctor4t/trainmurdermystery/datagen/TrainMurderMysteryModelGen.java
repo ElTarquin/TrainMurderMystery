@@ -2,10 +2,10 @@ package dev.doctor4t.trainmurdermystery.datagen;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.block.*;
 import dev.doctor4t.trainmurdermystery.block.property.CouchArms;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryBlocks;
+import dev.doctor4t.trainmurdermystery.index.TMMBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.*;
@@ -29,15 +29,15 @@ import java.util.function.Function;
 public class TrainMurderMysteryModelGen extends FabricModelProvider {
 
     protected static final Model THICK_BAR = new Model(
-            Optional.of(TrainMurderMystery.id("block/template_thick_bar")),
+            Optional.of(TMM.id("block/template_thick_bar")),
             Optional.empty(),
             TextureKey.TEXTURE);
     protected static final Model THICK_BAR_TOP = new Model(
-            Optional.of(TrainMurderMystery.id("block/template_thick_bar_top")),
+            Optional.of(TMM.id("block/template_thick_bar_top")),
             Optional.of("_top"),
             TextureKey.TEXTURE);
     protected static final Model THICK_BAR_BOTTOM = new Model(
-            Optional.of(TrainMurderMystery.id("block/template_thick_bar_bottom")),
+            Optional.of(TMM.id("block/template_thick_bar_bottom")),
             Optional.of("_bottom"),
             TextureKey.TEXTURE);
     private static final TextureKey SPYGLASS_KEY = TextureKey.of("spyglass");
@@ -201,130 +201,130 @@ public class TrainMurderMysteryModelGen extends FabricModelProvider {
     }
 
     private static Model template(String parentName, @Nullable String variant, TextureKey... requiredTextureKeys) {
-        return template(TrainMurderMystery.id(parentName), variant, requiredTextureKeys);
+        return template(TMM.id(parentName), variant, requiredTextureKeys);
     }
 
     private static Model template(String parentName, TextureKey... requiredTextureKeys) {
-        return template(TrainMurderMystery.id(parentName), requiredTextureKeys);
+        return template(TMM.id(parentName), requiredTextureKeys);
     }
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
-        this.registerVentShaft(generator, TrainMurderMysteryBlocks.STAINLESS_STEEL_VENT_SHAFT);
-        this.registerVentHatch(generator, TrainMurderMysteryBlocks.STAINLESS_STEEL_VENT_HATCH);
-        this.registerVentShaft(generator, TrainMurderMysteryBlocks.DARK_STEEL_VENT_SHAFT);
-        this.registerVentHatch(generator, TrainMurderMysteryBlocks.DARK_STEEL_VENT_HATCH);
-        this.registerVentShaft(generator, TrainMurderMysteryBlocks.TARNISHED_GOLD_VENT_SHAFT);
-        this.registerVentHatch(generator, TrainMurderMysteryBlocks.TARNISHED_GOLD_VENT_HATCH);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.TARNISHED_GOLD);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.GOLD);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.PRISTINE_GOLD);
-        generator.registerAxisRotated(TrainMurderMysteryBlocks.TARNISHED_GOLD_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
-        generator.registerAxisRotated(TrainMurderMysteryBlocks.GOLD_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
-        generator.registerAxisRotated(TrainMurderMysteryBlocks.PRISTINE_GOLD_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.METAL_SHEET);
-        generator.registerDoor(TrainMurderMysteryBlocks.COCKPIT_DOOR);
-        this.registerWalkway(generator, TrainMurderMysteryBlocks.METAL_SHEET_WALKWAY);
-        this.registerLadder(generator, TrainMurderMysteryBlocks.STAINLESS_STEEL_LADDER);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.STAINLESS_STEEL);
-        this.registerWalkway(generator, TrainMurderMysteryBlocks.STAINLESS_STEEL_WALKWAY);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STAINLESS_STEEL_BRANCH, TrainMurderMysteryBlocks.STAINLESS_STEEL);
-        generator.registerAxisRotated(TrainMurderMysteryBlocks.STAINLESS_STEEL_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.DARK_STEEL);
-        this.registerWalkway(generator, TrainMurderMysteryBlocks.DARK_STEEL_WALKWAY);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.DARK_STEEL_BRANCH, TrainMurderMysteryBlocks.DARK_STEEL);
-        generator.registerAxisRotated(TrainMurderMysteryBlocks.DARK_STEEL_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
-        generator.registerSimpleCubeAll(TrainMurderMysteryBlocks.RHOMBUS_GLASS);
-        this.registerGlassPanel(generator, TrainMurderMysteryBlocks.GOLDEN_GLASS_PANEL);
+        this.registerVentShaft(generator, TMMBlocks.STAINLESS_STEEL_VENT_SHAFT);
+        this.registerVentHatch(generator, TMMBlocks.STAINLESS_STEEL_VENT_HATCH);
+        this.registerVentShaft(generator, TMMBlocks.DARK_STEEL_VENT_SHAFT);
+        this.registerVentHatch(generator, TMMBlocks.DARK_STEEL_VENT_HATCH);
+        this.registerVentShaft(generator, TMMBlocks.TARNISHED_GOLD_VENT_SHAFT);
+        this.registerVentHatch(generator, TMMBlocks.TARNISHED_GOLD_VENT_HATCH);
+        this.registerFamily(generator, TMMBlocks.Family.TARNISHED_GOLD);
+        this.registerFamily(generator, TMMBlocks.Family.GOLD);
+        this.registerFamily(generator, TMMBlocks.Family.PRISTINE_GOLD);
+        generator.registerAxisRotated(TMMBlocks.TARNISHED_GOLD_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
+        generator.registerAxisRotated(TMMBlocks.GOLD_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
+        generator.registerAxisRotated(TMMBlocks.PRISTINE_GOLD_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
+        this.registerFamily(generator, TMMBlocks.Family.METAL_SHEET);
+        generator.registerDoor(TMMBlocks.COCKPIT_DOOR);
+        this.registerWalkway(generator, TMMBlocks.METAL_SHEET_WALKWAY);
+        this.registerLadder(generator, TMMBlocks.STAINLESS_STEEL_LADDER);
+        this.registerFamily(generator, TMMBlocks.Family.STAINLESS_STEEL);
+        this.registerWalkway(generator, TMMBlocks.STAINLESS_STEEL_WALKWAY);
+        this.registerBranch(generator, TMMBlocks.STAINLESS_STEEL_BRANCH, TMMBlocks.STAINLESS_STEEL);
+        generator.registerAxisRotated(TMMBlocks.STAINLESS_STEEL_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
+        this.registerFamily(generator, TMMBlocks.Family.DARK_STEEL);
+        this.registerWalkway(generator, TMMBlocks.DARK_STEEL_WALKWAY);
+        this.registerBranch(generator, TMMBlocks.DARK_STEEL_BRANCH, TMMBlocks.DARK_STEEL);
+        generator.registerAxisRotated(TMMBlocks.DARK_STEEL_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL);
+        generator.registerSimpleCubeAll(TMMBlocks.RHOMBUS_GLASS);
+        this.registerGlassPanel(generator, TMMBlocks.GOLDEN_GLASS_PANEL);
         this.registerCullingGlass(generator);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.MARBLE);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.MARBLE_TILE);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.DARK_MARBLE);
-        generator.registerSouthDefaultHorizontalFacing(TexturedModel.TEMPLATE_GLAZED_TERRACOTTA, TrainMurderMysteryBlocks.MARBLE_MOSAIC);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.WHITE_HULL);
-        this.registerCulledBlock(generator, TrainMurderMysteryBlocks.CULLING_WHITE_HULL, TrainMurderMysteryBlocks.WHITE_HULL);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.BLACK_HULL);
-        this.registerCulledBlock(generator, TrainMurderMysteryBlocks.CULLING_BLACK_HULL, TrainMurderMysteryBlocks.BLACK_HULL);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.BLACK_HULL_SHEET);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.MAHOGANY);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.MAHOGANY_HERRINGBONE);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.SMOOTH_MAHOGANY);
-        this.registerPanel(generator, TrainMurderMysteryBlocks.MAHOGANY_PANEL, TrainMurderMysteryBlocks.SMOOTH_MAHOGANY);
-        this.registerCabinet(generator, TrainMurderMysteryBlocks.MAHOGANY_CABINET);
-        this.registerVariedBookshelf(generator, TrainMurderMysteryBlocks.MAHOGANY_BOOKSHELF, TrainMurderMysteryBlocks.MAHOGANY_PLANKS);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.BUBINGA);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.BUBINGA_HERRINGBONE);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.SMOOTH_BUBINGA);
-        this.registerPanel(generator, TrainMurderMysteryBlocks.BUBINGA_PANEL, TrainMurderMysteryBlocks.SMOOTH_BUBINGA);
-        this.registerCabinet(generator, TrainMurderMysteryBlocks.BUBINGA_CABINET);
-        this.registerVariedBookshelf(generator, TrainMurderMysteryBlocks.BUBINGA_BOOKSHELF, TrainMurderMysteryBlocks.BUBINGA_PLANKS);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.EBONY);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.EBONY_HERRINGBONE);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.SMOOTH_EBONY);
-        this.registerPanel(generator, TrainMurderMysteryBlocks.EBONY_PANEL, TrainMurderMysteryBlocks.SMOOTH_EBONY);
-        this.registerCabinet(generator, TrainMurderMysteryBlocks.EBONY_CABINET);
-        this.registerTrimmedStairs(generator, TrainMurderMysteryBlocks.TRIMMED_EBONY_STAIRS);
-        this.registerVariedBookshelf(generator, TrainMurderMysteryBlocks.EBONY_BOOKSHELF, TrainMurderMysteryBlocks.EBONY_PLANKS);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.OAK_BRANCH, Blocks.OAK_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.SPRUCE_BRANCH, Blocks.SPRUCE_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.BIRCH_BRANCH, Blocks.BIRCH_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.JUNGLE_BRANCH, Blocks.JUNGLE_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.ACACIA_BRANCH, Blocks.ACACIA_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.DARK_OAK_BRANCH, Blocks.DARK_OAK_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.MANGROVE_BRANCH, Blocks.MANGROVE_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.CHERRY_BRANCH, Blocks.CHERRY_LOG);
-        this.registerPole(generator, TrainMurderMysteryBlocks.BAMBOO_POLE, Blocks.BAMBOO_BLOCK);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.CRIMSON_STIPE, Blocks.CRIMSON_STEM);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.WARPED_STIPE, Blocks.WARPED_STEM);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_OAK_BRANCH, Blocks.STRIPPED_OAK_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_SPRUCE_BRANCH, Blocks.STRIPPED_SPRUCE_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_BIRCH_BRANCH, Blocks.STRIPPED_BIRCH_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_JUNGLE_BRANCH, Blocks.STRIPPED_JUNGLE_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_ACACIA_BRANCH, Blocks.STRIPPED_ACACIA_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_DARK_OAK_BRANCH, Blocks.STRIPPED_DARK_OAK_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_MANGROVE_BRANCH, Blocks.STRIPPED_MANGROVE_LOG);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_CHERRY_BRANCH, Blocks.STRIPPED_CHERRY_LOG);
-        this.registerPole(generator, TrainMurderMysteryBlocks.STRIPPED_BAMBOO_POLE, Blocks.STRIPPED_BAMBOO_BLOCK);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_CRIMSON_STIPE, Blocks.STRIPPED_CRIMSON_STEM);
-        this.registerBranch(generator, TrainMurderMysteryBlocks.STRIPPED_WARPED_STIPE, Blocks.STRIPPED_WARPED_STEM);
+        this.registerFamily(generator, TMMBlocks.Family.MARBLE);
+        this.registerFamily(generator, TMMBlocks.Family.MARBLE_TILE);
+        this.registerFamily(generator, TMMBlocks.Family.DARK_MARBLE);
+        generator.registerSouthDefaultHorizontalFacing(TexturedModel.TEMPLATE_GLAZED_TERRACOTTA, TMMBlocks.MARBLE_MOSAIC);
+        this.registerFamily(generator, TMMBlocks.Family.WHITE_HULL);
+        this.registerCulledBlock(generator, TMMBlocks.CULLING_WHITE_HULL, TMMBlocks.WHITE_HULL);
+        this.registerFamily(generator, TMMBlocks.Family.BLACK_HULL);
+        this.registerCulledBlock(generator, TMMBlocks.CULLING_BLACK_HULL, TMMBlocks.BLACK_HULL);
+        this.registerFamily(generator, TMMBlocks.Family.BLACK_HULL_SHEET);
+        this.registerFamily(generator, TMMBlocks.Family.MAHOGANY);
+        this.registerFamily(generator, TMMBlocks.Family.MAHOGANY_HERRINGBONE);
+        this.registerFamily(generator, TMMBlocks.Family.SMOOTH_MAHOGANY);
+        this.registerPanel(generator, TMMBlocks.MAHOGANY_PANEL, TMMBlocks.SMOOTH_MAHOGANY);
+        this.registerCabinet(generator, TMMBlocks.MAHOGANY_CABINET);
+        this.registerVariedBookshelf(generator, TMMBlocks.MAHOGANY_BOOKSHELF, TMMBlocks.MAHOGANY_PLANKS);
+        this.registerFamily(generator, TMMBlocks.Family.BUBINGA);
+        this.registerFamily(generator, TMMBlocks.Family.BUBINGA_HERRINGBONE);
+        this.registerFamily(generator, TMMBlocks.Family.SMOOTH_BUBINGA);
+        this.registerPanel(generator, TMMBlocks.BUBINGA_PANEL, TMMBlocks.SMOOTH_BUBINGA);
+        this.registerCabinet(generator, TMMBlocks.BUBINGA_CABINET);
+        this.registerVariedBookshelf(generator, TMMBlocks.BUBINGA_BOOKSHELF, TMMBlocks.BUBINGA_PLANKS);
+        this.registerFamily(generator, TMMBlocks.Family.EBONY);
+        this.registerFamily(generator, TMMBlocks.Family.EBONY_HERRINGBONE);
+        this.registerFamily(generator, TMMBlocks.Family.SMOOTH_EBONY);
+        this.registerPanel(generator, TMMBlocks.EBONY_PANEL, TMMBlocks.SMOOTH_EBONY);
+        this.registerCabinet(generator, TMMBlocks.EBONY_CABINET);
+        this.registerTrimmedStairs(generator, TMMBlocks.TRIMMED_EBONY_STAIRS);
+        this.registerVariedBookshelf(generator, TMMBlocks.EBONY_BOOKSHELF, TMMBlocks.EBONY_PLANKS);
+        this.registerBranch(generator, TMMBlocks.OAK_BRANCH, Blocks.OAK_LOG);
+        this.registerBranch(generator, TMMBlocks.SPRUCE_BRANCH, Blocks.SPRUCE_LOG);
+        this.registerBranch(generator, TMMBlocks.BIRCH_BRANCH, Blocks.BIRCH_LOG);
+        this.registerBranch(generator, TMMBlocks.JUNGLE_BRANCH, Blocks.JUNGLE_LOG);
+        this.registerBranch(generator, TMMBlocks.ACACIA_BRANCH, Blocks.ACACIA_LOG);
+        this.registerBranch(generator, TMMBlocks.DARK_OAK_BRANCH, Blocks.DARK_OAK_LOG);
+        this.registerBranch(generator, TMMBlocks.MANGROVE_BRANCH, Blocks.MANGROVE_LOG);
+        this.registerBranch(generator, TMMBlocks.CHERRY_BRANCH, Blocks.CHERRY_LOG);
+        this.registerPole(generator, TMMBlocks.BAMBOO_POLE, Blocks.BAMBOO_BLOCK);
+        this.registerBranch(generator, TMMBlocks.CRIMSON_STIPE, Blocks.CRIMSON_STEM);
+        this.registerBranch(generator, TMMBlocks.WARPED_STIPE, Blocks.WARPED_STEM);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_OAK_BRANCH, Blocks.STRIPPED_OAK_LOG);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_SPRUCE_BRANCH, Blocks.STRIPPED_SPRUCE_LOG);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_BIRCH_BRANCH, Blocks.STRIPPED_BIRCH_LOG);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_JUNGLE_BRANCH, Blocks.STRIPPED_JUNGLE_LOG);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_ACACIA_BRANCH, Blocks.STRIPPED_ACACIA_LOG);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_DARK_OAK_BRANCH, Blocks.STRIPPED_DARK_OAK_LOG);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_MANGROVE_BRANCH, Blocks.STRIPPED_MANGROVE_LOG);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_CHERRY_BRANCH, Blocks.STRIPPED_CHERRY_LOG);
+        this.registerPole(generator, TMMBlocks.STRIPPED_BAMBOO_POLE, Blocks.STRIPPED_BAMBOO_BLOCK);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_CRIMSON_STIPE, Blocks.STRIPPED_CRIMSON_STEM);
+        this.registerBranch(generator, TMMBlocks.STRIPPED_WARPED_STIPE, Blocks.STRIPPED_WARPED_STEM);
         this.registerPanelStripes(generator);
-        this.registerRailing(generator, TrainMurderMysteryBlocks.TRIMMED_RAILING, TrainMurderMysteryBlocks.TRIMMED_RAILING_POST, TrainMurderMysteryBlocks.DIAGONAL_TRIMMED_RAILING);
-        this.registerCargoBox(generator, TrainMurderMysteryBlocks.CARGO_BOX);
-        this.registerLoungeCouch(generator, TrainMurderMysteryBlocks.WHITE_LOUNGE_COUCH);
-        generator.registerNorthDefaultHorizontalRotation(TrainMurderMysteryBlocks.WHITE_OTTOMAN);
-        this.registerBed(generator, TrainMurderMysteryBlocks.WHITE_TRIMMED_BED);
-        this.registerBed(generator, TrainMurderMysteryBlocks.RED_TRIMMED_BED);
-        this.registerLoungeCouch(generator, TrainMurderMysteryBlocks.BLUE_LOUNGE_COUCH);
-        this.registerLoungeCouch(generator, TrainMurderMysteryBlocks.GREEN_LOUNGE_COUCH);
-        this.registerLeatherCouch(generator, TrainMurderMysteryBlocks.RED_LEATHER_COUCH);
-        this.registerLeatherCouch(generator, TrainMurderMysteryBlocks.BROWN_LEATHER_COUCH);
-        this.registerLeatherCouch(generator, TrainMurderMysteryBlocks.BEIGE_LEATHER_COUCH);
-        generator.registerSimpleState(TrainMurderMysteryBlocks.COFFEE_TABLE);
-        generator.registerSimpleState(TrainMurderMysteryBlocks.BAR_TABLE);
-        generator.registerSimpleState(TrainMurderMysteryBlocks.BAR_STOOL);
-        this.registerBar(generator, TrainMurderMysteryBlocks.GOLD_BAR);
-        this.registerLedge(generator, TrainMurderMysteryBlocks.GOLD_LEDGE, TrainMurderMysteryBlocks.GOLD_BAR);
-        this.registerBar(generator, TrainMurderMysteryBlocks.STAINLESS_STEEL_BAR);
-        this.registerTrimmedLantern(generator, TrainMurderMysteryBlocks.TRIMMED_LANTERN, false);
-        this.registerWallLamp(generator, TrainMurderMysteryBlocks.WALL_LAMP, false);
-        this.registerNeonPillar(generator, TrainMurderMysteryBlocks.NEON_PILLAR, false);
-        this.registerNeonTube(generator, TrainMurderMysteryBlocks.NEON_TUBE, false);
-        this.registerSprinkler(generator, TrainMurderMysteryBlocks.STAINLESS_STEEL_SPRINKLER, TrainMurderMysteryBlocks.STAINLESS_STEEL);
-        this.registerSprinkler(generator, TrainMurderMysteryBlocks.GOLD_SPRINKLER, TrainMurderMysteryBlocks.GOLD);
-        this.registerButton(generator, TrainMurderMysteryBlocks.SMALL_BUTTON);
-        this.registerButton(generator, TrainMurderMysteryBlocks.ELEVATOR_BUTTON);
-        this.registerOrnament(generator, TrainMurderMysteryBlocks.GOLD_ORNAMENT);
-        this.registerParticleBlockWithItemSprite(generator, TrainMurderMysteryBlocks.SMALL_WOOD_DOOR, TrainMurderMysteryBlocks.TARNISHED_GOLD_PILLAR);
-        this.registerParticleBlockWithItemSprite(generator, TrainMurderMysteryBlocks.SMALL_GLASS_DOOR, TrainMurderMysteryBlocks.TARNISHED_GOLD_PILLAR);
-        this.registerHullGlass(generator, TrainMurderMysteryBlocks.HULL_GLASS);
-        generator.registerSimpleCubeAll(TrainMurderMysteryBlocks.RHOMBUS_HULL_GLASS);
-        this.registerPrivacyGlassPanel(generator, TrainMurderMysteryBlocks.PRIVACY_GLASS_PANEL);
-        generator.registerSimpleCubeAll(TrainMurderMysteryBlocks.NAVY_STEEL);
-        this.registerPanel(generator, TrainMurderMysteryBlocks.NAVY_STEEL_PANEL, TrainMurderMysteryBlocks.NAVY_STEEL);
-        generator.registerSimpleCubeAll(TrainMurderMysteryBlocks.NAVY_STEEL_TILES);
-        this.registerPanel(generator, TrainMurderMysteryBlocks.NAVY_STEEL_TILES_PANEL, TrainMurderMysteryBlocks.NAVY_STEEL_TILES);
-        this.registerFamily(generator, TrainMurderMysteryBlocks.Family.SMOOTH_NAVY_STEEL);
-        this.registerPanel(generator, TrainMurderMysteryBlocks.SMOOTH_NAVY_STEEL_PANEL, TrainMurderMysteryBlocks.SMOOTH_NAVY_STEEL);
+        this.registerRailing(generator, TMMBlocks.TRIMMED_RAILING, TMMBlocks.TRIMMED_RAILING_POST, TMMBlocks.DIAGONAL_TRIMMED_RAILING);
+        this.registerCargoBox(generator, TMMBlocks.CARGO_BOX);
+        this.registerLoungeCouch(generator, TMMBlocks.WHITE_LOUNGE_COUCH);
+        generator.registerNorthDefaultHorizontalRotation(TMMBlocks.WHITE_OTTOMAN);
+        this.registerBed(generator, TMMBlocks.WHITE_TRIMMED_BED);
+        this.registerBed(generator, TMMBlocks.RED_TRIMMED_BED);
+        this.registerLoungeCouch(generator, TMMBlocks.BLUE_LOUNGE_COUCH);
+        this.registerLoungeCouch(generator, TMMBlocks.GREEN_LOUNGE_COUCH);
+        this.registerLeatherCouch(generator, TMMBlocks.RED_LEATHER_COUCH);
+        this.registerLeatherCouch(generator, TMMBlocks.BROWN_LEATHER_COUCH);
+        this.registerLeatherCouch(generator, TMMBlocks.BEIGE_LEATHER_COUCH);
+        generator.registerSimpleState(TMMBlocks.COFFEE_TABLE);
+        generator.registerSimpleState(TMMBlocks.BAR_TABLE);
+        generator.registerSimpleState(TMMBlocks.BAR_STOOL);
+        this.registerBar(generator, TMMBlocks.GOLD_BAR);
+        this.registerLedge(generator, TMMBlocks.GOLD_LEDGE, TMMBlocks.GOLD_BAR);
+        this.registerBar(generator, TMMBlocks.STAINLESS_STEEL_BAR);
+        this.registerTrimmedLantern(generator, TMMBlocks.TRIMMED_LANTERN, false);
+        this.registerWallLamp(generator, TMMBlocks.WALL_LAMP, false);
+        this.registerNeonPillar(generator, TMMBlocks.NEON_PILLAR, false);
+        this.registerNeonTube(generator, TMMBlocks.NEON_TUBE, false);
+        this.registerSprinkler(generator, TMMBlocks.STAINLESS_STEEL_SPRINKLER, TMMBlocks.STAINLESS_STEEL);
+        this.registerSprinkler(generator, TMMBlocks.GOLD_SPRINKLER, TMMBlocks.GOLD);
+        this.registerButton(generator, TMMBlocks.SMALL_BUTTON);
+        this.registerButton(generator, TMMBlocks.ELEVATOR_BUTTON);
+        this.registerOrnament(generator, TMMBlocks.GOLD_ORNAMENT);
+        this.registerParticleBlockWithItemSprite(generator, TMMBlocks.SMALL_WOOD_DOOR, TMMBlocks.TARNISHED_GOLD_PILLAR);
+        this.registerParticleBlockWithItemSprite(generator, TMMBlocks.SMALL_GLASS_DOOR, TMMBlocks.TARNISHED_GOLD_PILLAR);
+        this.registerHullGlass(generator, TMMBlocks.HULL_GLASS);
+        generator.registerSimpleCubeAll(TMMBlocks.RHOMBUS_HULL_GLASS);
+        this.registerPrivacyGlassPanel(generator, TMMBlocks.PRIVACY_GLASS_PANEL);
+        generator.registerSimpleCubeAll(TMMBlocks.NAVY_STEEL);
+        this.registerPanel(generator, TMMBlocks.NAVY_STEEL_PANEL, TMMBlocks.NAVY_STEEL);
+        generator.registerSimpleCubeAll(TMMBlocks.NAVY_STEEL_TILES);
+        this.registerPanel(generator, TMMBlocks.NAVY_STEEL_TILES_PANEL, TMMBlocks.NAVY_STEEL_TILES);
+        this.registerFamily(generator, TMMBlocks.Family.SMOOTH_NAVY_STEEL);
+        this.registerPanel(generator, TMMBlocks.SMOOTH_NAVY_STEEL_PANEL, TMMBlocks.SMOOTH_NAVY_STEEL);
 
     }
 
@@ -880,7 +880,7 @@ public class TrainMurderMysteryModelGen extends FabricModelProvider {
     }
 
     private void registerCullingGlass(BlockStateModelGenerator generator) {
-        Block block = TrainMurderMysteryBlocks.CULLING_GLASS;
+        Block block = TMMBlocks.CULLING_GLASS;
         generator.registerItemModel(block);
         Identifier model = ModelIds.getBlockModelId(block);
         generator.blockStateCollector.accept(
@@ -895,7 +895,7 @@ public class TrainMurderMysteryModelGen extends FabricModelProvider {
     }
 
     private void registerPanelStripes(BlockStateModelGenerator generator) {
-        Block block = TrainMurderMysteryBlocks.PANEL_STRIPES;
+        Block block = TMMBlocks.PANEL_STRIPES;
         generator.registerItemModel(block.asItem());
         Identifier model = ModelIds.getBlockModelId(block);
         generator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block).coordinate(
@@ -916,7 +916,7 @@ public class TrainMurderMysteryModelGen extends FabricModelProvider {
 
     private void registerCulledBlock(BlockStateModelGenerator generator, Block block, Block textureBlock) {
         Identifier model = Models.TEMPLATE_SINGLE_FACE.upload(block, TextureMap.texture(textureBlock), generator.modelCollector);
-        Identifier modelGlass = Models.TEMPLATE_SINGLE_FACE.upload(block, "_glass", TextureMap.texture(TextureMap.getId(TrainMurderMysteryBlocks.HULL_GLASS)), generator.modelCollector);
+        Identifier modelGlass = Models.TEMPLATE_SINGLE_FACE.upload(block, "_glass", TextureMap.texture(TextureMap.getId(TMMBlocks.HULL_GLASS)), generator.modelCollector);
         Models.GENERATED.upload(ModelIds.getItemModelId(block.asItem()), TextureMap.layer0(textureBlock), generator.modelCollector);
         MultipartBlockStateSupplier blockStateSupplier = MultipartBlockStateSupplier.create(block);
         for (Direction direction : Direction.values()) {
@@ -967,7 +967,7 @@ public class TrainMurderMysteryModelGen extends FabricModelProvider {
     private void registerSpaceHelmet(BlockStateModelGenerator generator, Block block) {
         generator.registerParentedItemModel(block.asItem(), Identifier.ofVanilla("item/template_skull"));
 
-        Identifier model = Models.PARTICLE.upload(block, TextureMap.particle(TrainMurderMysteryBlocks.STAINLESS_STEEL), generator.modelCollector);
+        Identifier model = Models.PARTICLE.upload(block, TextureMap.particle(TMMBlocks.STAINLESS_STEEL), generator.modelCollector);
         generator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(block, model));
     }
 

@@ -1,15 +1,14 @@
 package dev.doctor4t.trainmurdermystery.client.gui.screen.ingame;
 
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class LimitedInventoryScreen extends LimitedHandledScreen<PlayerScreenHandler> {
-    public static final Identifier BACKGROUND_TEXTURE = TrainMurderMystery.id("textures/gui/container/limited_inventory.png");
+    public static final Identifier BACKGROUND_TEXTURE = TMM.id("textures/gui/container/limited_inventory.png");
 
     public LimitedInventoryScreen(PlayerEntity player) {
         super(player.playerScreenHandler, player.getInventory(), Text.empty());

@@ -1,6 +1,6 @@
 package dev.doctor4t.trainmurdermystery.block;
 
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ConnectingBlock;
@@ -140,7 +140,7 @@ public class VentShaftBlock extends Block {
             player.setPose(EntityPose.SWIMMING);
             player.setOnGround(true);
             player.setPosition(centerPos.getX(), blockPos.getY() + 0.125f, centerPos.getZ());
-            player.playSound(TrainMurderMysterySounds.VENT_SHAFT.getStepSound(), 1.0f, 1.0f);
+            player.playSound(TMMSounds.VENT_SHAFT.getStepSound(), 1.0f, 1.0f);
             return ActionResult.success(world.isClient);
         }
 

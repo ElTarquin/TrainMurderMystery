@@ -2,7 +2,7 @@ package dev.doctor4t.trainmurdermystery.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.doctor4t.trainmurdermystery.block_entity.SprinklerBlockEntity;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryBlockEntities;
+import dev.doctor4t.trainmurdermystery.index.TMMBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -92,7 +92,7 @@ public class SprinklerBlock extends WallMountedBlock implements BlockEntityProvi
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         BlockState cycle = state.cycle(POWERED);
         world.setBlockState(pos, cycle, Block.NOTIFY_LISTENERS);
-        world.getBlockEntity(pos, TrainMurderMysteryBlockEntities.SPRINKLER).ifPresent(entity -> {
+        world.getBlockEntity(pos, TMMBlockEntities.SPRINKLER).ifPresent(entity -> {
             entity.setPowered(cycle.get(POWERED));
             entity.sync();
         });
@@ -110,7 +110,7 @@ public class SprinklerBlock extends WallMountedBlock implements BlockEntityProvi
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        if (!world.isClient || !type.equals(TrainMurderMysteryBlockEntities.SPRINKLER)) {
+        if (!world.isClient || !type.equals(TMMBlockEntities.SPRINKLER)) {
             return null;
         }
         return SprinklerBlockEntity::clientTick;

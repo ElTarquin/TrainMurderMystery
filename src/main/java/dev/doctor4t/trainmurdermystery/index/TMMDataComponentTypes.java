@@ -1,6 +1,6 @@
 package dev.doctor4t.trainmurdermystery.index;
 
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import net.minecraft.component.ComponentType;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
@@ -18,6 +18,6 @@ public interface TMMDataComponentTypes {
     }
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, TrainMurderMystery.id(name), builderOperator.apply(ComponentType.builder()).build());
+        return Registry.register(Registries.DATA_COMPONENT_TYPE, TMM.id(name), builderOperator.apply(ComponentType.builder()).build());
     }
 }

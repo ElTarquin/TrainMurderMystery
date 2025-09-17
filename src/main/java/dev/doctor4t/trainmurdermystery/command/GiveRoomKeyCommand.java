@@ -2,7 +2,7 @@ package dev.doctor4t.trainmurdermystery.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryItems;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class GiveRoomKeyCommand {
     }
 
     private static int giveRoomKey(ServerCommandSource source, String roomName) {
-        ItemStack itemStack = new ItemStack(TrainMurderMysteryItems.KEY);
+        ItemStack itemStack = new ItemStack(TMMItems.KEY);
         itemStack.apply(DataComponentTypes.LORE, LoreComponent.DEFAULT, component -> new LoreComponent(Text.literal(roomName).getWithStyle(Style.EMPTY.withItalic(false).withColor(0xFF8C00))));
         if (source.getPlayer() != null) source.getPlayer().giveItemStack(itemStack);
         return 1;

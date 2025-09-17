@@ -2,8 +2,8 @@ package dev.doctor4t.trainmurdermystery.block_entity;
 
 import dev.doctor4t.trainmurdermystery.block.DoorPartBlock;
 import dev.doctor4t.trainmurdermystery.block.SmallDoorBlock;
-import dev.doctor4t.trainmurdermystery.game.GameConstants;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.AnimationState;
@@ -70,7 +70,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
             this.lastUpdate = this.world.getTime();
             this.open = !this.open;
             this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.open ? 1 : 0);
-            this.closeCountdown = this.open ? GameConstants.DOOR_AUTOCLOSE_TIME : 0;
+            this.closeCountdown = this.open ? TMMGameConstants.DOOR_AUTOCLOSE_TIME : 0;
         }
     }
 
@@ -78,7 +78,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
         if (this.world == null) {
             return;
         }
-        this.world.playSound(null, this.pos, TrainMurderMysterySounds.BLOCK_DOOR_TOGGLE, SoundCategory.BLOCKS, 1f, 1f);
+        this.world.playSound(null, this.pos, TMMSounds.BLOCK_DOOR_TOGGLE, SoundCategory.BLOCKS, 1f, 1f);
     }
 
     protected abstract void toggleBlocks();
@@ -154,7 +154,7 @@ public abstract class DoorBlockEntity extends SyncingBlockEntity {
     }
 
     public void jam() {
-        this.setJammed(GameConstants.JAMMED_DOOR_TIME);
+        this.setJammed(TMMGameConstants.JAMMED_DOOR_TIME);
         if (this.open) {
             this.toggle(false);
         }

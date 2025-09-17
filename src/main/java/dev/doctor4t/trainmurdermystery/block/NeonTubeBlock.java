@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.block;
 
 import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryProperties;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -86,9 +86,9 @@ public class NeonTubeBlock extends BarBlock {
         while (this.toggle(world, mutable, axis, lit)) {
             mutable.move(direction.getOpposite());
         }
-        world.playSound(null, pos, TrainMurderMysterySounds.BLOCK_LIGHT_TOGGLE, SoundCategory.BLOCKS, 0.5f, lit ? 1f : 1.2f);
+        world.playSound(null, pos, TMMSounds.BLOCK_LIGHT_TOGGLE, SoundCategory.BLOCKS, 0.5f, lit ? 1f : 1.2f);
         if (!active) {
-            world.playSound(player, pos, TrainMurderMysterySounds.BLOCK_BUTTON_TOGGLE_NO_POWER, SoundCategory.BLOCKS, 0.1f, 1f);
+            world.playSound(player, pos, TMMSounds.BLOCK_BUTTON_TOGGLE_NO_POWER, SoundCategory.BLOCKS, 0.1f, 1f);
         }
         return ActionResult.success(world.isClient);
     }

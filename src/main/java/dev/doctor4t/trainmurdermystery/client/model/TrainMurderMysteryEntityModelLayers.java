@@ -1,6 +1,6 @@
 package dev.doctor4t.trainmurdermystery.client.model;
 
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.client.render.block_entity.SmallDoorBlockEntityRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.model.Dilation;
@@ -20,11 +20,11 @@ public interface TrainMurderMysteryEntityModelLayers {
     }
 
     private static EntityModelLayer layer(String id, String name) {
-        return new EntityModelLayer(TrainMurderMystery.id(id), name);
+        return new EntityModelLayer(TMM.id(id), name);
     }
 
     private static EntityModelLayer layer(String id) {
-        return new EntityModelLayer(TrainMurderMystery.id(id), "main");
+        return new EntityModelLayer(TMM.id(id), "main");
     }
 
 }

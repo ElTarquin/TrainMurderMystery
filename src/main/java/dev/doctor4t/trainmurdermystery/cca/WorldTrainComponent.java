@@ -14,7 +14,7 @@ public class WorldTrainComponent implements AutoSyncedComponent {
     }
 
     private void sync() {
-        TrainMurderMysteryComponents.TRAIN.sync(this.world);
+        TMMComponents.TRAIN.sync(this.world);
     }
 
     public void setTrainSpeed(float trainSpeed) {

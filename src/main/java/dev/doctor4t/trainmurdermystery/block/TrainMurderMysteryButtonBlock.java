@@ -1,8 +1,7 @@
 package dev.doctor4t.trainmurdermystery.block;
 
-import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
 import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryProperties;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
@@ -66,6 +65,6 @@ public abstract class TrainMurderMysteryButtonBlock extends ButtonBlock {
 
     @Override
     protected SoundEvent getClickSound(boolean powered) {
-        return TrainMurderMysterySounds.BLOCK_SPACE_BUTTON_TOGGLE;
+        return TMMSounds.BLOCK_SPACE_BUTTON_TOGGLE;
     }
 }

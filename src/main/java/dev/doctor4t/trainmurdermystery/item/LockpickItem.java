@@ -1,17 +1,13 @@
 package dev.doctor4t.trainmurdermystery.item;
 
 import dev.doctor4t.trainmurdermystery.block.SmallDoorBlock;
-import dev.doctor4t.trainmurdermystery.block_entity.DoorBlockEntity;
 import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
-import dev.doctor4t.trainmurdermystery.game.GameConstants;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
@@ -36,10 +32,10 @@ public class LockpickItem extends Item {
                 if (player.isSneaking()) {
                     entity.jam();
 
-                    if (!player.isCreative()) player.getItemCooldownManager().set(this, GameConstants.LOCKPICK_JAM_COOLDOWN);
+                    if (!player.isCreative()) player.getItemCooldownManager().set(this, TMMGameConstants.LOCKPICK_JAM_COOLDOWN);
 
                     if (!world.isClient)
-                        world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TrainMurderMysterySounds.ITEM_LOCKPICK_DOOR, SoundCategory.BLOCKS, 1f, 1f);
+                        world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TMMSounds.ITEM_LOCKPICK_DOOR, SoundCategory.BLOCKS, 1f, 1f);
                     return ActionResult.SUCCESS;
                 }
             }

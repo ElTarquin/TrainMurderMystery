@@ -2,8 +2,7 @@ package dev.doctor4t.trainmurdermystery.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import dev.doctor4t.trainmurdermystery.cca.TrainMurderMysteryComponents;
+import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
@@ -20,7 +19,7 @@ public class SetTrainSpeedCommand {
     }
 
     private static int setTrainSpeed(ServerCommandSource source, int speed) {
-        TrainMurderMysteryComponents.TRAIN.get(source.getWorld()).setTrainSpeed(speed);
+        TMMComponents.TRAIN.get(source.getWorld()).setTrainSpeed(speed);
         return 1;
     }
 }

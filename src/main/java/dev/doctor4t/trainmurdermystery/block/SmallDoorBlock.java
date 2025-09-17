@@ -2,8 +2,8 @@ package dev.doctor4t.trainmurdermystery.block;
 
 import dev.doctor4t.trainmurdermystery.block_entity.DoorBlockEntity;
 import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryItems;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysterySounds;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -146,26 +146,26 @@ public class SmallDoorBlock extends DoorPartBlock {
             if (player.isCreative()) {
                 return open(state, world, entity, lowerPos);
             } else {
-                if (player.getMainHandStack().isOf(TrainMurderMysteryItems.REVOLVER)) {
+                if (player.getMainHandStack().isOf(TMMItems.REVOLVER)) {
                     return ActionResult.PASS;
                 }
 
                 boolean requiresKey = !entity.getKeyName().isEmpty();
-                boolean hasLockpick = player.getMainHandStack().isOf(TrainMurderMysteryItems.LOCKPICK);
+                boolean hasLockpick = player.getMainHandStack().isOf(TMMItems.LOCKPICK);
 
                 if (entity.isOpen()) {
                     return open(state, world, entity, lowerPos);
                 } else if (requiresKey) {
-                    if (player.getMainHandStack().isOf(TrainMurderMysteryItems.KEY) || hasLockpick) {
+                    if (player.getMainHandStack().isOf(TMMItems.KEY) || hasLockpick) {
                         LoreComponent lore = player.getMainHandStack().get(DataComponentTypes.LORE);
                         boolean isRightKey = lore != null && !lore.lines().isEmpty() && lore.lines().getFirst().getString().equals(entity.getKeyName());
                         if (isRightKey || hasLockpick) {
-                            if (isRightKey) world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TrainMurderMysterySounds.ITEM_KEY_DOOR, SoundCategory.BLOCKS, 1f, 1f);
-                            if (hasLockpick) world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TrainMurderMysterySounds.ITEM_LOCKPICK_DOOR, SoundCategory.BLOCKS, 1f, 1f);
+                            if (isRightKey) world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TMMSounds.ITEM_KEY_DOOR, SoundCategory.BLOCKS, 1f, 1f);
+                            if (hasLockpick) world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TMMSounds.ITEM_LOCKPICK_DOOR, SoundCategory.BLOCKS, 1f, 1f);
                             return open(state, world, entity, lowerPos);
                         } else {
                             if (!world.isClient) {
-                                world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TrainMurderMysterySounds.BLOCK_DOOR_LOCKED, SoundCategory.BLOCKS, 1f, 1f);
+                                world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TMMSounds.BLOCK_DOOR_LOCKED, SoundCategory.BLOCKS, 1f, 1f);
                                 player.sendMessage(Text.translatable("tip.door.requires_different_key"), true);
                             }
                             return ActionResult.FAIL;
@@ -173,14 +173,14 @@ public class SmallDoorBlock extends DoorPartBlock {
                     }
 
                     if (!world.isClient) {
-                        world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TrainMurderMysterySounds.BLOCK_DOOR_LOCKED, SoundCategory.BLOCKS, 1f, 1f);
+                        world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TMMSounds.BLOCK_DOOR_LOCKED, SoundCategory.BLOCKS, 1f, 1f);
                         player.sendMessage(Text.translatable("tip.door.requires_key"), true);
                     }
                     return ActionResult.FAIL;
                 } else {
                     if (entity.isJammed()) {
                         if (!world.isClient) {
-                            world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TrainMurderMysterySounds.BLOCK_DOOR_LOCKED, SoundCategory.BLOCKS, 1f, 1f);
+                            world.playSound(null, lowerPos.getX() + .5f, lowerPos.getY() + 1, lowerPos.getZ() + .5f, TMMSounds.BLOCK_DOOR_LOCKED, SoundCategory.BLOCKS, 1f, 1f);
                             player.sendMessage(Text.translatable("tip.door.jammed"), true);
                         }
                     } else {
@@ -194,7 +194,7 @@ public class SmallDoorBlock extends DoorPartBlock {
         return ActionResult.PASS;
     }
 
-    private static @NotNull ActionResult open(BlockState state, World world, SmallDoorBlockEntity entity, BlockPos lowerPos) {
+    static @NotNull ActionResult open(BlockState state, World world, SmallDoorBlockEntity entity, BlockPos lowerPos) {
         if (world.isClient) return ActionResult.SUCCESS;
         toggleDoor(state, world, entity, lowerPos);
         return ActionResult.CONSUME;

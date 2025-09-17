@@ -1,9 +1,9 @@
 package dev.doctor4t.trainmurdermystery.client.util;
 
 import dev.doctor4t.trainmurdermystery.client.TrainMurderMysteryClient;
-import dev.doctor4t.trainmurdermystery.game.GameLoop;
+import dev.doctor4t.trainmurdermystery.game.TMMGameLoop;
 import dev.doctor4t.trainmurdermystery.index.TMMDataComponentTypes;
-import dev.doctor4t.trainmurdermystery.index.TrainMurderMysteryItems;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.PlayerListEntry;
@@ -25,22 +25,22 @@ public class TMMItemTooltips {
 
     public static void addTooltips() {
         ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipType, tooltipList) -> {
-            addTooltipsForItem(TrainMurderMysteryItems.KNIFE, 3, itemStack, tooltipList);
-            addCooldownText(TrainMurderMysteryItems.KNIFE, tooltipList, itemStack);
+            addTooltipsForItem(TMMItems.KNIFE, 3, itemStack, tooltipList);
+            addCooldownText(TMMItems.KNIFE, tooltipList, itemStack);
 
-            addTooltipsForItem(TrainMurderMysteryItems.LOCKPICK, 2, itemStack, tooltipList);
-            addCooldownText(TrainMurderMysteryItems.LOCKPICK, tooltipList, itemStack);
+            addTooltipsForItem(TMMItems.LOCKPICK, 2, itemStack, tooltipList);
+            addCooldownText(TMMItems.LOCKPICK, tooltipList, itemStack);
 
             addRevolverTooltips(itemStack, tooltipList);
 
-            addTooltipsForItem(TrainMurderMysteryItems.BODY_BAG, 1, itemStack, tooltipList);
+            addTooltipsForItem(TMMItems.BODY_BAG, 1, itemStack, tooltipList);
 
             addLetterTooltips(itemStack, tooltipList);
         });
     }
 
     private static void addRevolverTooltips(ItemStack itemStack, List<Text> tooltipList) {
-        Item item = TrainMurderMysteryItems.REVOLVER;
+        Item item = TMMItems.REVOLVER;
         if (itemStack.isOf(item)) {
             Integer i = itemStack.get(TMMDataComponentTypes.BULLETS);
             i = i != null ? i : 6;
@@ -50,9 +50,9 @@ public class TMMItemTooltips {
     }
 
     private static void addLetterTooltips(ItemStack itemStack, List<Text> tooltipList) {
-        Item item = TrainMurderMysteryItems.LETTER;
+        Item item = TMMItems.LETTER;
         if (itemStack.isOf(item)) {
-            if (itemStack.getName().getString().equals(Text.translatable(TrainMurderMysteryItems.LETTER.getTranslationKey()+".instructions").getString())) {
+            if (itemStack.getName().getString().equals(Text.translatable(TMMItems.LETTER.getTranslationKey()+".instructions").getString())) {
                 String tooltipString = "tip." + item.getTranslationKey().substring(24) + ".hitman.tooltip";
 
                 tooltipList.add(Text.translatable(tooltipString + "1").withColor(LETTER_COLOR));
@@ -60,7 +60,7 @@ public class TMMItemTooltips {
                 for (UUID target : TrainMurderMysteryClient.getTargets()) {
                     PlayerEntity player = MinecraftClient.getInstance().world.getPlayerByUuid(target);
 
-                    UnaryOperator<Style> stylizer = style -> GameLoop.isPlayerEliminated(player) ? style.withStrikethrough(true).withColor(0x1B8943) : style.withColor(0x8A1B29);
+                    UnaryOperator<Style> stylizer = style -> TMMGameLoop.isPlayerEliminated(player) ? style.withStrikethrough(true).withColor(0x1B8943) : style.withColor(0x8A1B29);
                     PlayerListEntry playerListEntry = TrainMurderMysteryClient.PLAYER_ENTRIES_CACHE.get(target);
                     if (playerListEntry != null)
                         tooltipList.add(Text.translatable(tooltipString + ".target", playerListEntry.getProfile().getName()).styled(stylizer));
@@ -69,7 +69,7 @@ public class TMMItemTooltips {
                 for (int i = 2; i <= 4; i++) {
                     tooltipList.add(Text.translatable(tooltipString + i).withColor(LETTER_COLOR));
                 }
-            } else if (itemStack.getName().getString().equals(Text.translatable(TrainMurderMysteryItems.LETTER.getTranslationKey()+".notes").getString())) {
+            } else if (itemStack.getName().getString().equals(Text.translatable(TMMItems.LETTER.getTranslationKey()+".notes").getString())) {
                 for (int i = 1; i <= 4; i++) {
                     tooltipList.add(Text.translatable("tip." + item.getTranslationKey().substring(24) + ".detective.tooltip" + i).withColor(LETTER_COLOR));
                 }

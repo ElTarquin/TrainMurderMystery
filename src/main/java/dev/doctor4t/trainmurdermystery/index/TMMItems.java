@@ -1,7 +1,7 @@
 package dev.doctor4t.trainmurdermystery.index;
 
 import dev.doctor4t.ratatouille.util.registrar.ItemRegistrar;
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.item.*;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.Item;
@@ -13,12 +13,12 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 
-public interface TrainMurderMysteryItems {
-    ItemRegistrar registrar = new ItemRegistrar(TrainMurderMystery.MOD_ID);
+public interface TMMItems {
+    ItemRegistrar registrar = new ItemRegistrar(TMM.MOD_ID);
 
-    RegistryKey<ItemGroup> BUILDING_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, TrainMurderMystery.id("building"));
-    RegistryKey<ItemGroup> DECORATION_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, TrainMurderMystery.id("decoration"));
-    RegistryKey<ItemGroup> EQUIPMENT_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, TrainMurderMystery.id("equipment"));
+    RegistryKey<ItemGroup> BUILDING_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, TMM.id("building"));
+    RegistryKey<ItemGroup> DECORATION_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, TMM.id("decoration"));
+    RegistryKey<ItemGroup> EQUIPMENT_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, TMM.id("equipment"));
 
     Item KEY = registrar.create("key", new KeyItem(new Item.Settings().maxCount(1)), EQUIPMENT_GROUP);
     Item LOCKPICK = registrar.create("lockpick", new LockpickItem(new Item.Settings().maxCount(1)), EQUIPMENT_GROUP);
@@ -32,15 +32,15 @@ public interface TrainMurderMysteryItems {
 
         Registry.register(Registries.ITEM_GROUP, BUILDING_GROUP, FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.trainmurdermystery.building"))
-                .icon(() -> new ItemStack(TrainMurderMysteryBlocks.TARNISHED_GOLD_PILLAR))
+                .icon(() -> new ItemStack(TMMBlocks.TARNISHED_GOLD_PILLAR))
                 .build());
         Registry.register(Registries.ITEM_GROUP, DECORATION_GROUP, FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.trainmurdermystery.decoration"))
-                .icon(() -> new ItemStack(TrainMurderMysteryBlocks.TARNISHED_GOLD_VENT_SHAFT))
+                .icon(() -> new ItemStack(TMMBlocks.TARNISHED_GOLD_VENT_SHAFT))
                 .build());
         Registry.register(Registries.ITEM_GROUP, EQUIPMENT_GROUP, FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.trainmurdermystery.equipment"))
-                .icon(() -> new ItemStack(TrainMurderMysteryItems.KEY))
+                .icon(() -> new ItemStack(TMMItems.KEY))
                 .build());
     }
 }

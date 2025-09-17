@@ -1,15 +1,15 @@
 package dev.doctor4t.trainmurdermystery.index;
 
 import dev.doctor4t.ratatouille.util.registrar.EntityTypeRegistrar;
-import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
+import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.block.entity.SeatEntity;
 import dev.doctor4t.trainmurdermystery.entity.PlayerBodyEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 
-public interface TrainMurderMysteryEntities {
-    EntityTypeRegistrar registrar = new EntityTypeRegistrar(TrainMurderMystery.MOD_ID);
+public interface TMMEntities {
+    EntityTypeRegistrar registrar = new EntityTypeRegistrar(TMM.MOD_ID);
 
     EntityType<SeatEntity> SEAT = registrar.create("seat", EntityType.Builder.create(SeatEntity::new, SpawnGroup.MISC)
             .dimensions(1f, 1f)

@@ -3,12 +3,16 @@ package dev.doctor4t.trainmurdermystery.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import dev.doctor4t.trainmurdermystery.cca.PlayerMoodComponent;
 import dev.doctor4t.trainmurdermystery.game.TMMGameLoop;
 import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,7 +39,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @ModifyReturnValue(method = "getMovementSpeed", at = @At("RETURN"))
     public float tmm$overrideMovementSpeed(float original) {
         if (TMMGameLoop.isPlayerAliveAndSurvival((PlayerEntity) (Object) this)) {
-            return this.isSprinting() ? 0.1f : 0.07f;
+            var speed = this.isSprinting() ? 0.1f : 0.07f;
+            speed *= MathHelper.lerp(PlayerMoodComponent.KEY.get(this).mood, 0.5f, 1f) - 1f;
+            return speed;
         } else {
             return original;
         }

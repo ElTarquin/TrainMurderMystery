@@ -30,7 +30,7 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
     private final PlayerEntity player;
     private TrainPreference currentPreference = TrainPreference.TRUE;
     private int nextPreferenceTimer = 0;
-    private float mood = 1f;
+    public float mood = 1f;
     private boolean fulfilled = false;
     private String previousPreferenceText = "";
     private String preferenceText = "";
@@ -47,10 +47,10 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
     @Environment(EnvType.CLIENT)
     public void renderHud(DrawContext context, RenderTickCounter tickCounter) {
         if (!Objects.equals(this.previousPreferenceText, this.preferenceText)) {
-            this.preferenceTextAlpha = MathHelper.lerp(tickCounter.getTickDelta(true), this.preferenceTextAlpha, 0f);
+            this.preferenceTextAlpha = MathHelper.lerp(tickCounter.getTickDelta(true) / 4, this.preferenceTextAlpha, 0f);
             if (this.preferenceTextAlpha <= 0.01f) this.previousPreferenceText = this.preferenceText;
         } else {
-            this.preferenceTextAlpha = MathHelper.lerp(tickCounter.getTickDelta(true), this.preferenceTextAlpha, 1f);
+            this.preferenceTextAlpha = MathHelper.lerp(tickCounter.getTickDelta(true) / 4, this.preferenceTextAlpha, 1f);
         }
         if (this.previousPreferenceText.isEmpty()) return;
         var renderer = MinecraftClient.getInstance().textRenderer;
@@ -58,13 +58,17 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
         context.getMatrices().push();
         context.getMatrices().translate(- (10 + textWidth) * (1f - this.preferenceTextAlpha), 0, 0);
         context.drawTextWithShadow(renderer, this.previousPreferenceText, 8, 8, MathHelper.packRgb(1f, 1f, 1f) | ((int) (this.preferenceTextAlpha * 255) << 24));
-        context.fill(12, 8, (int) (4 + textWidth * this.mood), 10, MathHelper.packRgb(1f, 1f, 1f) | ((int) (this.preferenceTextAlpha * 255) << 24));
+        context.getMatrices().pop();
+        context.getMatrices().push();
+        context.getMatrices().translate(12, 10 + renderer.fontHeight, 0);
+        context.getMatrices().scale((textWidth - 8) * this.mood, 1, 1);
+        context.fill(0, 0, 1, 1, MathHelper.hsvToRgb(this.mood / 3.0F, 1.0F, 1.0F) | ((int) (this.preferenceTextAlpha * 255) << 24));
         context.getMatrices().pop();
     }
 
     public void reset() {
         this.currentPreference = TrainPreference.TRUE;
-        this.nextPreferenceTimer = TMMGameConstants.MAX_PREFERENCE_COOLDOWN;
+        this.nextPreferenceTimer = 1;
         this.fulfilled = false;
         this.setMood(1f);
         this.sync();
@@ -84,7 +88,9 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
             this.nextPreferenceTimer--;
             if (this.nextPreferenceTimer <= 0) {
                 this.generatePreference();
+                this.preferenceText = this.currentPreference.getString();
                 this.nextPreferenceTimer = (int) (this.player.getRandom().nextFloat() * (TMMGameConstants.MAX_PREFERENCE_COOLDOWN - TMMGameConstants.MIN_PREFERENCE_COOLDOWN) + TMMGameConstants.MIN_PREFERENCE_COOLDOWN);
+                shouldSync = true;
             }
         }
         if (this.currentPreference.isFulfilled(this.player)) {
@@ -108,12 +114,6 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
 
     public void setMood(float mood) {
         this.mood = Math.clamp(mood, 0, 1);
-        if (this.player.getWorld().isClient) return;
-        var attribute = this.player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-        if (attribute != null) {
-            if (attribute.hasModifier(MOOD)) attribute.removeModifier(MOOD);
-            attribute.addTemporaryModifier(new EntityAttributeModifier(MOOD, MathHelper.lerp(this.mood, 0.5f, 1f) - 1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-        }
     }
 
     private void generatePreference() {
@@ -148,8 +148,6 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
         } else {
             this.currentPreference = new CarriageTrainPreference(carriages.get(this.player.getRandom().nextInt(carriages.size())));
         }
-
-        this.preferenceText = this.currentPreference.getString();
     }
 
     @Override

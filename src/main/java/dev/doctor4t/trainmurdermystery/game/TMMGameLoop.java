@@ -122,7 +122,7 @@ public class TMMGameLoop {
                 }
 
                 // win display
-                if (winStatus != WinStatus.NONE) {
+                if (winStatus != WinStatus.NONE && gameComponent.getFadeOut() < 0) {
                     for (ServerPlayerEntity player : serverWorld.getPlayers()) {
                         player.sendMessage(Text.translatable("game.win." + winStatus.name().toLowerCase(Locale.ROOT)), true);
                     }

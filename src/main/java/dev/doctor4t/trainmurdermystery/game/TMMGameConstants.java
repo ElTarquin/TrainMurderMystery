@@ -1,9 +1,14 @@
 package dev.doctor4t.trainmurdermystery.game;
 
+import dev.doctor4t.trainmurdermystery.cca.PlayerStoreComponent;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
+import dev.doctor4t.trainmurdermystery.util.ShopEntry;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import dev.doctor4t.trainmurdermystery.util.Carriage;
 import net.minecraft.util.math.Box;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +57,25 @@ public interface TMMGameConstants {
     int MIN_PREFERENCE_COOLDOWN = getInTicks(0, 30);
     int MAX_PREFERENCE_COOLDOWN = getInTicks(0, 30);
     int TIME_TO_FIRST_TASK = getInTicks(0, 10);
+
+    // Shop Variables
+    List<ShopEntry> SHOP_ENTRIES = List.of(
+            new ShopEntry(TMMItems.REVOLVER.getDefaultStack(), 150),
+            new ShopEntry(TMMItems.KNIFE.getDefaultStack(), 50),
+            new ShopEntry(TMMItems.LOCKPICK.getDefaultStack(), 75),
+            new ShopEntry(TMMItems.BLACKOUT.getDefaultStack(), 75) {
+                @Override
+                public boolean onBuy(@NotNull PlayerEntity player) {
+                    return PlayerStoreComponent.useBlackout(player);
+                }
+            },
+            new ShopEntry(TMMItems.DISGUISE.getDefaultStack(), 75) {
+                @Override
+                public boolean onBuy(@NotNull PlayerEntity player) {
+                    return PlayerStoreComponent.useDisguise(player);
+                }
+            }
+    );
 
     static int getInTicks(int minutes, int seconds) {
         return (minutes * 60 + seconds) * 20;

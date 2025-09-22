@@ -8,6 +8,7 @@ import dev.doctor4t.trainmurdermystery.TMM;
 import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.cca.WorldGameComponent;
 import dev.doctor4t.trainmurdermystery.client.gui.MoodRenderer;
+import dev.doctor4t.trainmurdermystery.client.gui.StoreRenderer;
 import dev.doctor4t.trainmurdermystery.client.model.TrainMurderMysteryEntityModelLayers;
 import dev.doctor4t.trainmurdermystery.client.render.block_entity.SmallDoorBlockEntityRenderer;
 import dev.doctor4t.trainmurdermystery.client.render.block_entity.WheelBlockEntityRenderer;
@@ -199,6 +200,9 @@ public class TMMClient implements ClientModInitializer {
                 MinecraftClient.getInstance().getSoundManager().updateSoundVolume(SoundCategory.MASTER, soundLevel);
                 soundLevel = MinecraftClient.getInstance().options.getSoundVolume(SoundCategory.MASTER);
             }
+
+            var player = MinecraftClient.getInstance().player;
+            if (player != null) StoreRenderer.tick();
         });
 
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {

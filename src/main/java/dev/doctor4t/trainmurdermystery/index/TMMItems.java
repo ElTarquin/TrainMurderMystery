@@ -13,7 +13,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 
-public interface TMMItems {
+public @SuppressWarnings("unchecked") interface TMMItems {
     ItemRegistrar registrar = new ItemRegistrar(TMM.MOD_ID);
 
     RegistryKey<ItemGroup> BUILDING_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, TMM.id("building"));
@@ -26,6 +26,8 @@ public interface TMMItems {
     Item REVOLVER = registrar.create("revolver", new RevolverItem(new Item.Settings().maxCount(1)), EQUIPMENT_GROUP);
     Item BODY_BAG = registrar.create("body_bag", new BodyBagItem(new Item.Settings().maxCount(1)), EQUIPMENT_GROUP);
     Item LETTER = registrar.create("letter", new Item(new Item.Settings().maxCount(1)), EQUIPMENT_GROUP);
+    Item BLACKOUT = registrar.create("blackout", new Item(new Item.Settings().maxCount(1)), EQUIPMENT_GROUP);
+    Item DISGUISE = registrar.create("disguise", new Item(new Item.Settings().maxCount(1)), EQUIPMENT_GROUP);
 
     static void initialize() {
         registrar.registerEntries();

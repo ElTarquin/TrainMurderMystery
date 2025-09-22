@@ -8,6 +8,7 @@ import dev.doctor4t.trainmurdermystery.client.TMMClient;
 import dev.doctor4t.trainmurdermystery.client.gui.CrosshairRenderer;
 import dev.doctor4t.trainmurdermystery.client.gui.MoodRenderer;
 import dev.doctor4t.trainmurdermystery.client.gui.RoleNameRenderer;
+import dev.doctor4t.trainmurdermystery.client.gui.StoreRenderer;
 import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -16,6 +17,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,6 +41,7 @@ public class InGameHudMixin {
         var renderer = MinecraftClient.getInstance().textRenderer;
         if (TMMClient.isPlayerAliveAndInSurvival()) MoodRenderer.renderHud(player, renderer, context, tickCounter);
         RoleNameRenderer.renderHud(renderer, player, context, tickCounter);
+        if (MinecraftClient.getInstance().currentScreen == null) StoreRenderer.renderHud(renderer, player, context, tickCounter.getTickDelta(true));
     }
 
     @WrapMethod(method = "renderCrosshair")
@@ -74,12 +77,12 @@ public class InGameHudMixin {
     }
 
     @WrapOperation(method = "renderHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
-    private void tmm$overrideHotbarTexture(DrawContext instance, Identifier texture, int x, int y, int width, int height, Operation<Void> original) {
+    private void tmm$overrideHotbarTexture(DrawContext instance, Identifier texture, int x, int y, int width, int height, @NotNull Operation<Void> original) {
         original.call(instance, TMMClient.isPlayerAliveAndInSurvival() ? TMM_HOTBAR_TEXTURE : texture, x, y, width, height);
     }
 
     @WrapOperation(method = "renderHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 1))
-    private void tmm$overrideHotbarSelectionTexture(DrawContext instance, Identifier texture, int x, int y, int width, int height, Operation<Void> original) {
+    private void tmm$overrideHotbarSelectionTexture(DrawContext instance, Identifier texture, int x, int y, int width, int height, @NotNull Operation<Void> original) {
         original.call(instance, TMMClient.isPlayerAliveAndInSurvival() ? TMM_HOTBAR_SELECTION_TEXTURE : texture, x, y, width, height);
     }
 
@@ -99,7 +102,7 @@ public class InGameHudMixin {
         }
 
         // darker sleep overlay
-        if (this.client.player.getSleepTimer() > 0) {
+        if (this.client.player != null && this.client.player.getSleepTimer() > 0) {
             this.client.getProfiler().push("sleep");
             float f = (float) this.client.player.getSleepTimer();
             float g = f / 100.0F;

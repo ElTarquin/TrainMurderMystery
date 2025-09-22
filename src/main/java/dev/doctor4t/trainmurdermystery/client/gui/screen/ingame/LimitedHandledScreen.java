@@ -18,6 +18,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -146,32 +147,28 @@ public abstract class LimitedHandledScreen<T extends ScreenHandler> extends Scre
         this.drawBackground(context, delta, mouseX, mouseY);
     }
 
-    public static void drawSlotHighlight(DrawContext context, int x, int y, int z) {
+    public static void drawSlotHighlight(@NotNull DrawContext context, int x, int y, int z) {
         context.fillGradient(RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, -2130706433, -2130706433, z);
     }
 
     protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
-        if (this.handler.getCursorStack().isEmpty() && this.focusedSlot != null && this.focusedSlot.hasStack()) {
-            ItemStack itemStack = this.focusedSlot.getStack();
+        if (!this.handler.getCursorStack().isEmpty() || this.focusedSlot == null || !this.focusedSlot.hasStack()) return;
+        this.renderLimitedInventoryTooltip(context, this.focusedSlot.getStack());
+    }
 
-            List<Text> tooltips = this.getTooltipFromItem(itemStack);
-            List<Text> name = new ArrayList<>();
-            name.add(tooltips.getFirst());
-            tooltips.removeFirst();
-
-            int nameWidth = this.textRenderer.getWidth(itemStack.getName().getString());
-
-            int tooltipWidth = 0;
-            for (Text text : tooltips) {
-                int newWidth = this.textRenderer.getWidth(text.getString());
-                if (newWidth > tooltipWidth) {
-                    tooltipWidth = newWidth;
-                }
-            }
-
-            context.drawTooltip(this.textRenderer, name, itemStack.getTooltipData(), this.x + 76 - (nameWidth / 2), this.y - 2);
-            if (tooltipWidth > 0) context.drawTooltip(this.textRenderer, tooltips, itemStack.getTooltipData(), this.x + 76 - (tooltipWidth / 2), this.y + 50);
+    public void renderLimitedInventoryTooltip(DrawContext context, ItemStack itemStack) {
+        var tooltips = this.getTooltipFromItem(itemStack);
+        List<Text> name = new ArrayList<>();
+        name.add(tooltips.getFirst());
+        tooltips.removeFirst();
+        var nameWidth = this.textRenderer.getWidth(itemStack.getName().getString());
+        var tooltipWidth = 0;
+        for (var text : tooltips) {
+            var newWidth = this.textRenderer.getWidth(text.getString());
+            if (newWidth > tooltipWidth) tooltipWidth = newWidth;
         }
+        context.drawTooltip(this.textRenderer, name, itemStack.getTooltipData(), this.x + 76 - (nameWidth / 2), this.y - 2);
+        if (tooltipWidth > 0) context.drawTooltip(this.textRenderer, tooltips, itemStack.getTooltipData(), this.x + 76 - (tooltipWidth / 2), this.y + 50);
     }
 
     protected List<Text> getTooltipFromItem(ItemStack stack) {

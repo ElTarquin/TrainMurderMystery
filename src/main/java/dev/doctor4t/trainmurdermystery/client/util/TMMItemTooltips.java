@@ -35,6 +35,9 @@ public class TMMItemTooltips {
 
             addTooltipsForItem(TMMItems.BODY_BAG, 1, itemStack, tooltipList);
 
+            addTooltipsForItem(TMMItems.BLACKOUT, 3, itemStack, tooltipList);
+            addTooltipsForItem(TMMItems.DISGUISE, 3, itemStack, tooltipList);
+
             addLetterTooltips(itemStack, tooltipList);
         });
     }

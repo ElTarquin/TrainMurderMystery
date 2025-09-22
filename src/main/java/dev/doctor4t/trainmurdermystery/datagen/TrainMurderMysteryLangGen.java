@@ -208,6 +208,8 @@ public class TrainMurderMysteryLangGen extends FabricLanguageProvider {
         builder.add(TMMItems.REVOLVER, "Revolver");
         builder.add(TMMItems.BODY_BAG, "Body Bag");
         builder.add(TMMItems.LETTER, "Letter");
+        builder.add(TMMItems.BLACKOUT, "Blackout");
+        builder.add(TMMItems.DISGUISE, "Disguise Kit");
 
         builder.add(TMMItems.LETTER.getTranslationKey() + ".instructions", "Instructions");
         builder.add("tip.letter.hitman.tooltip1", "Thank you for taking this job. Please eliminate the following targets:");
@@ -256,6 +258,12 @@ public class TrainMurderMysteryLangGen extends FabricLanguageProvider {
         builder.add("tip.revolver.tooltip1", "Right-click to use, point and shoot");
         builder.add("tip.revolver.tooltip2", "Can be used to shoot a door and open it permanently (only glass and wooden doors)");
         builder.add("tip.body_bag.tooltip1", "Use on a dead body to bag it up and remove it");
+        builder.add("tip.blackout.tooltip1", "Trigger a blackout");
+        builder.add("tip.blackout.tooltip2", "Activated instantly on purchase");
+        builder.add("tip.blackout.tooltip3", "More placeholder text");
+        builder.add("tip.disguise.tooltip1", "Disguise yourself for a bit");
+        builder.add("tip.disguise.tooltip2", "Activated instantly on purchase");
+        builder.add("tip.disguise.tooltip3", "More placeholder text");
 
         builder.add("game.win.hitmen", "All targets were eliminated: The Hitmen win!");
         builder.add("game.win.passengers", "All hitmen were eliminated: The Passengers win!");

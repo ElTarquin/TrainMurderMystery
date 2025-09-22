@@ -37,7 +37,8 @@
 			"trainmurdermystery:train",
 			"trainmurdermystery:game",
 			"trainmurdermystery:role",
-			"trainmurdermystery:mood"
+			"trainmurdermystery:mood",
+			"trainmurdermystery:store"
 		]
 	},
 	"depends": {

@@ -2,11 +2,15 @@ package dev.doctor4t.trainmurdermystery.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.doctor4t.trainmurdermystery.block_entity.PlateBlockEntity;
+import dev.doctor4t.trainmurdermystery.block_entity.SprinklerBlockEntity;
 import dev.doctor4t.trainmurdermystery.index.TMMBlockEntities;
+import dev.doctor4t.trainmurdermystery.index.TMMDataComponentTypes;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -85,11 +89,28 @@ public class PlateBlock extends BlockWithEntity {
 
             if (!hasPlatterItem) {
                 ItemStack randomItem = platter.get(world.random.nextInt(platter.size()));
+                if (blockEntity.getPoisonedItemsCount() > 0) {
+                    randomItem.set(TMMDataComponentTypes.POISONED, true);
+                    blockEntity.setPoisonedItemsCount(blockEntity.getPoisonedItemsCount() - 1);
+                }
+
                 player.playSoundToPlayer(SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
                 player.setStackInHand(Hand.MAIN_HAND, randomItem);
             }
+        } if (player.getStackInHand(Hand.MAIN_HAND).isOf(TMMItems.POISON)) {
+            blockEntity.setPoisonedItemsCount(blockEntity.getPoisonedItemsCount() + 1);
+            player.getStackInHand(Hand.MAIN_HAND).decrement(1);
+            player.playSoundToPlayer(SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 0.5f, 1f);
         }
 
         return ActionResult.PASS;
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        if (!world.isClient || !type.equals(TMMBlockEntities.PLATE)) {
+            return null;
+        }
+        return PlateBlockEntity::clientTick;
     }
 }

@@ -4,16 +4,27 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import dev.doctor4t.trainmurdermystery.cca.PlayerMoodComponent;
+import dev.doctor4t.trainmurdermystery.cca.PlayerPoisonComponent;
 import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.cca.WorldGameComponent;
 import dev.doctor4t.trainmurdermystery.game.TMMGameConstants;
 import dev.doctor4t.trainmurdermystery.game.GameFunctions;
+import dev.doctor4t.trainmurdermystery.index.TMMDataComponentTypes;
 import dev.doctor4t.trainmurdermystery.index.TMMItems;
+import dev.doctor4t.trainmurdermystery.util.PoisonUtils;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,6 +32,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
@@ -66,5 +78,36 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (!GameFunctions.isPlayerAliveAndSurvival((PlayerEntity) (Object)this) || this.getMainHandStack().isOf(TMMItems.KNIFE)) {
             original.call(target);
         }
+    }
+
+    @Inject(method = "eatFood", at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/entity/player/HungerManager;eat(Lnet/minecraft/component/type/FoodComponent;)V",
+            shift = At.Shift.AFTER))
+    private void tmm$poisonedFoodEffect(
+            World world, ItemStack stack, FoodComponent foodComponent, CallbackInfoReturnable<ItemStack> cir) {
+        if (stack.getOrDefault(TMMDataComponentTypes.POISONED, false) && !world.isClient) {
+            int poisonTicks = PlayerPoisonComponent.KEY.get(this).poisonTicks;
+
+            if (poisonTicks == -1) PlayerPoisonComponent.KEY.get(this).setPoisonTicks(
+                    Random.create().nextBetween(PlayerPoisonComponent.clampTime.getLeft(), PlayerPoisonComponent.clampTime.getRight()));
+            else PlayerPoisonComponent.KEY.get(this).setPoisonTicks(MathHelper.clamp(
+                    poisonTicks - Random.create().nextBetween(100, 300), 0, PlayerPoisonComponent.clampTime.getRight()));
+        }
+    }
+
+    @Inject(method = "canConsume(Z)Z", at = @At("HEAD"), cancellable = true)
+    private void tmm$allowEatingRegardlessOfHunger(boolean ignoreHunger, CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(true);
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void tmm$saveData(NbtCompound nbt, CallbackInfo ci) {
+        nbt.putFloat("sprintingTicks", this.sprintingTicks);
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void tmm$readData(NbtCompound nbt, CallbackInfo ci) {
+        this.sprintingTicks = nbt.getFloat("sprintingTicks");
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class SmallButtonBlock extends TrainMurderMysteryButtonBlock {
+public class SmallButtonBlock extends TMMButtonBlock {
 
     protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(6, 6, 14, 10, 10, 16);
     protected static final VoxelShape NORTH_PRESSED_SHAPE = Block.createCuboidShape(6, 6, 15, 10, 10, 16);

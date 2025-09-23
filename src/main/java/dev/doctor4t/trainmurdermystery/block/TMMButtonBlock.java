@@ -1,5 +1,6 @@
 package dev.doctor4t.trainmurdermystery.block;
 
+import dev.doctor4t.trainmurdermystery.block_entity.SmallDoorBlockEntity;
 import dev.doctor4t.trainmurdermystery.index.TMMProperties;
 import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import net.minecraft.block.Block;
@@ -19,10 +20,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class TrainMurderMysteryButtonBlock extends ButtonBlock {
+public abstract class TMMButtonBlock extends ButtonBlock {
     public static final BooleanProperty ACTIVE = TMMProperties.ACTIVE;
 
-    public TrainMurderMysteryButtonBlock(Settings settings) {
+    public TMMButtonBlock(Settings settings) {
         super(BlockSetType.IRON, 20, settings);
         this.setDefaultState(super.getDefaultState().with(ACTIVE, true));
     }
@@ -55,7 +56,30 @@ public abstract class TrainMurderMysteryButtonBlock extends ButtonBlock {
 
     @Override
     public void powerOn(BlockState state, World world, BlockPos pos, @Nullable PlayerEntity player) {
+        if (state.get(ACTIVE)) {
+            if (!world.isClient) {
+                Iterable<BlockPos> iterable = BlockPos.iterateOutwards(pos, 1, 1, 1);
+                for (BlockPos blockPos : iterable) {
+                    if (blockPos.equals(pos)) {
+                        continue;
+                    }
+                    if (this.tryOpenDoors(world, blockPos)) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            world.playSound(player, pos, TMMSounds.BLOCK_BUTTON_TOGGLE_NO_POWER, SoundCategory.BLOCKS, 0.1f, 1f);
+        }
         super.powerOn(state, world, pos, player);
+    }
+
+    private boolean tryOpenDoors(World world, BlockPos pos) {
+        if (world.getBlockEntity(pos) instanceof SmallDoorBlockEntity entity) {
+            entity.toggle(false);
+            return true;
+        }
+        return false;
     }
 
     @Override

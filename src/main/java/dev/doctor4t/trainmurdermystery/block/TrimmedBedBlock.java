@@ -1,8 +1,14 @@
 package dev.doctor4t.trainmurdermystery.block;
 
 import com.mojang.serialization.MapCodec;
+import dev.doctor4t.trainmurdermystery.block_entity.PlateBlockEntity;
+import dev.doctor4t.trainmurdermystery.block_entity.TrimmedBedBlockEntity;
+import dev.doctor4t.trainmurdermystery.index.TMMBlockEntities;
+import dev.doctor4t.trainmurdermystery.index.TMMItems;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.BedPart;
 import net.minecraft.entity.Dismounting;
 import net.minecraft.entity.Entity;
@@ -18,6 +24,7 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -120,6 +127,29 @@ public class TrimmedBedBlock extends BedBlock {
         if (world.isClient) {
             return ActionResult.CONSUME;
         } else {
+            if (!player.isCreative() && player.getStackInHand(Hand.MAIN_HAND).isOf(TMMItems.SCORPION)) {
+                TrimmedBedBlockEntity blockEntity = null;
+
+                if (world.getBlockEntity(pos) instanceof TrimmedBedBlockEntity firstBlockEntity) {
+                    if (world.getBlockState(pos).get(PART) == BedPart.HEAD)
+                        blockEntity = firstBlockEntity;
+                    else {
+                        BlockPos headPos = pos.offset(world.getBlockState(pos).get(FACING));
+                        if (world.getBlockEntity(headPos) instanceof TrimmedBedBlockEntity foundBlockEntity)
+                            blockEntity = foundBlockEntity;
+                    }
+                }
+
+                if (blockEntity != null) {
+                    if (!blockEntity.getHasScorpion()) {
+                        blockEntity.setHasScorpion(true);
+                        player.getStackInHand(Hand.MAIN_HAND).decrement(1);
+
+                        return ActionResult.SUCCESS;
+                    }
+                }
+            }
+
             if (state.get(PART) != BedPart.HEAD) {
                 pos = pos.offset(state.get(FACING));
                 state = world.getBlockState(pos);
@@ -137,7 +167,13 @@ public class TrimmedBedBlock extends BedBlock {
         }
     }
 
-
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        if (!world.isClient || !type.equals(TMMBlockEntities.TRIMMED_BED)) {
+            return null;
+        }
+        return TrimmedBedBlockEntity::clientTick;
+    }
 
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
@@ -230,7 +266,7 @@ public class TrimmedBedBlock extends BedBlock {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new TrimmedBedBlockEntity(TMMBlockEntities.TRIMMED_BED, pos, state);
     }
 
     @Override

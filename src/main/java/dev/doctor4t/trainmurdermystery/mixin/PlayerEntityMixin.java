@@ -12,6 +12,7 @@ import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.game.GameFunctions;
 import dev.doctor4t.trainmurdermystery.index.TMMDataComponentTypes;
 import dev.doctor4t.trainmurdermystery.index.TMMItems;
+import dev.doctor4t.trainmurdermystery.index.TMMSounds;
 import dev.doctor4t.trainmurdermystery.item.CocktailItem;
 import dev.doctor4t.trainmurdermystery.util.PoisonUtils;
 import dev.doctor4t.trainmurdermystery.util.Scheduler;
@@ -23,6 +24,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Unit;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -73,8 +75,17 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @WrapMethod(method = "attack")
     public void attack(Entity target, Operation<Void> original) {
-        if (!GameFunctions.isPlayerAliveAndSurvival((PlayerEntity) (Object)this) || this.getMainHandStack().isOf(TMMItems.KNIFE)) {
+        PlayerEntity self = (PlayerEntity) (Object)this;
+        if (!GameFunctions.isPlayerAliveAndSurvival(self) || this.getMainHandStack().isOf(TMMItems.KNIFE)) {
             original.call(target);
+        }
+
+        if (GameFunctions.isPlayerAliveAndSurvival(self) && getMainHandStack().isOf(TMMItems.BAT) && target instanceof PlayerEntity playerTarget) {
+            GameFunctions.killPlayer(playerTarget, true);
+            self.getEntityWorld().playSound(self,
+                    self.getX(), self.getY(), self.getZ(),
+                    TMMSounds.ITEM_BAT_KILL, SoundCategory.PLAYERS,
+                    1f, 1f);
         }
     }
 

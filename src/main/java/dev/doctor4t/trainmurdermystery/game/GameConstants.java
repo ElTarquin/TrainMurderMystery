@@ -73,6 +73,9 @@ public interface GameConstants {
     int BLACKOUT_MIN_DURATION = getInTicks(0, 10);
     int BLACKOUT_MAX_DURATION = getInTicks(0, 12);
 
+    //PSYCHO
+    int PSYCHO_TIMER = 30;
+
     static int getInTicks(int minutes, int seconds) {
         return (minutes * 60 + seconds) * 20;
     }

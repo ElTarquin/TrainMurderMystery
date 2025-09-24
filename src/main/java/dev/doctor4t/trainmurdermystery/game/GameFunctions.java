@@ -132,6 +132,7 @@ public class GameFunctions {
             PlayerMoodComponent.KEY.get(serverPlayerEntity).reset();
             PlayerStoreComponent.KEY.get(serverPlayerEntity).reset();
             PlayerPoisonComponent.KEY.get(serverPlayerEntity).reset();
+            PlayerPsychoComponent.KEY.get(serverPlayerEntity).reset();
         }
         gameComponent.resetHitmanList();
 
@@ -209,6 +210,7 @@ public class GameFunctions {
             PlayerMoodComponent.KEY.get(player).reset();
             PlayerStoreComponent.KEY.get(player).reset();
             PlayerPoisonComponent.KEY.get(player).reset();
+            PlayerPsychoComponent.KEY.get(player).reset();
         }
 
         // reset game component

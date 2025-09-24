@@ -1,5 +1,6 @@
 package dev.doctor4t.trainmurdermystery.client.gui;
 
+import dev.doctor4t.trainmurdermystery.cca.PlayerPsychoComponent;
 import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -8,8 +9,10 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.NotNull;
 
 public class RoleNameRenderer {
@@ -23,11 +26,19 @@ public class RoleNameRenderer {
         if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof PlayerEntity target) {
             nametagAlpha = MathHelper.lerp(tickCounter.getTickDelta(true) / 4, nametagAlpha, 1f);
             nametag = target.getDisplayName();
+
             if (component.isHitman(target)) {
                 targetRole = TrainRole.HITMAN;
             } else {
                 targetRole = TrainRole.BYSTANDER;
             }
+
+            boolean shouldObfuscate = targetRole == TrainRole.BYSTANDER && PlayerPsychoComponent.KEY.get(target).getPsychoTicks() > 0;
+
+            nametag = shouldObfuscate
+                    ? Text.literal("urscrewed" + "X".repeat(Random.createThreadSafe().nextInt(8)))
+                    .styled(style -> style.withFormatting(Formatting.OBFUSCATED, Formatting.DARK_RED))
+                    : nametag;
         } else {
             nametagAlpha = MathHelper.lerp(tickCounter.getTickDelta(true) / 4, nametagAlpha, 0f);
         }

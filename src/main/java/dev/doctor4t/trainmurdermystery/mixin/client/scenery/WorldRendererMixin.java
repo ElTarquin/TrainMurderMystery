@@ -17,6 +17,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.ChunkSectionPos;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
@@ -30,27 +31,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
-    @Shadow
-    @Final
-    private MinecraftClient client;
-
-    @Shadow
-    public int ticks;
-
-    @Shadow
-    @Nullable
-    private ClientWorld world;
+    @Shadow @Final private MinecraftClient client;
 
     @Inject(method = "method_52816", at = @At(value = "RETURN"), cancellable = true)
-    private static void tmm$setFrustumToAlwaysVisible(Frustum frustum, CallbackInfoReturnable<Frustum> cir) {
+    private static void tmm$setFrustumToAlwaysVisible(Frustum frustum, @NotNull CallbackInfoReturnable<Frustum> cir) {
         cir.setReturnValue(new AlwaysVisibleFrustum(frustum));
     }
 
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V"))
     public void tmm$disableSky(WorldRenderer instance, Matrix4f matrix4f, Matrix4f projectionMatrix, float tickDelta, Camera camera, boolean thickFog, Runnable fogCallback, Operation<Void> original) {
-        if (!TMMClient.isTrainMoving()) {
-            original.call(instance, matrix4f, projectionMatrix, tickDelta, camera, thickFog, fogCallback);
-        }
+        if (!TMMClient.isTrainMoving()) original.call(instance, matrix4f, projectionMatrix, tickDelta, camera, thickFog, fogCallback);
     }
 
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/BackgroundRenderer;applyFog(Lnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/BackgroundRenderer$FogType;FZF)V"))
@@ -64,7 +54,7 @@ public abstract class WorldRendererMixin {
 
     @Unique
     private static void doFog(int fogStart, int fogEnd) {
-        BackgroundRenderer.FogData fogData = new BackgroundRenderer.FogData(BackgroundRenderer.FogType.FOG_SKY);
+        var fogData = new BackgroundRenderer.FogData(BackgroundRenderer.FogType.FOG_SKY);
 
         fogData.fogStart = fogStart;
         fogData.fogEnd = fogEnd;

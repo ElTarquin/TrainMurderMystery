@@ -297,6 +297,6 @@ public class TMMClient implements ClientModInitializer {
     }
 
     public static boolean isInstinctEnabled() {
-        return TMMClient.instinctKeybind.isPressed() && TMMClient.isHitman() && TMMClient.isPlayerAliveAndInSurvival();
+        return instinctKeybind.isPressed() && ((isHitman() && isPlayerAliveAndInSurvival()) || (MinecraftClient.getInstance().player != null && MinecraftClient.getInstance().player.isSpectator()));
     }
 }

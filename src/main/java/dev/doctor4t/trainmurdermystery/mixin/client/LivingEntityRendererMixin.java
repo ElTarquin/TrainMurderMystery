@@ -25,7 +25,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 
     @WrapOperation(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/feature/FeatureRenderer;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/Entity;FFFFFF)V"))
     public void tmm$noFeaturesOnPsycho(
-            FeatureRenderer instance, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, X t,
+            FeatureRenderer<T, M> instance, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, X t,
             float limbAngle,
             float limbDistance,
             float tickDelta,
@@ -33,11 +33,9 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
             float headYaw,
             float headPitch, Operation<Void> original,
             T livingEntity) {
-        boolean isPsycho = livingEntity instanceof PlayerEntity player && PlayerPsychoComponent.KEY.get(player).getPsychoTicks() > 0;
-        boolean isItemRenderer = instance instanceof HeldItemFeatureRenderer<?, ?>;
-        if (isPsycho && !isItemRenderer) {
-            System.out.println(instance);
-        } else {
+        var isPsycho = livingEntity instanceof PlayerEntity player && PlayerPsychoComponent.KEY.get(player).getPsychoTicks() > 0;
+        var isItemRenderer = instance instanceof HeldItemFeatureRenderer<?, ?>;
+        if (!isPsycho || isItemRenderer) {
             original.call(instance, matrixStack, vertexConsumerProvider, i, t, limbAngle, limbDistance, tickDelta, animationProgress, headYaw, headPitch);
         }
     }

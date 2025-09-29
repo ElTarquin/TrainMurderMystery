@@ -13,8 +13,10 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.LightType;
 import org.jetbrains.annotations.NotNull;
 
 public class RoleNameRenderer {
@@ -25,8 +27,10 @@ public class RoleNameRenderer {
     private static final Text[] note = new Text[]{Text.empty(), Text.empty(), Text.empty(), Text.empty()};
 
     public static void renderHud(TextRenderer renderer, @NotNull ClientPlayerEntity player, DrawContext context, RenderTickCounter tickCounter) {
-        if (WorldBlackoutComponent.KEY.get(player.getWorld()).isBlackoutActive()) return;
         var component = TMMComponents.GAME.get(player.getWorld());
+        if (player.getWorld().getLightLevel(LightType.BLOCK, BlockPos.ofFloored(player.getEyePos())) < 2) {
+            return;
+        }
         if (ProjectileUtil.getCollision(player, entity -> entity instanceof PlayerEntity, 2f) instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof PlayerEntity target) {
             nametagAlpha = MathHelper.lerp(tickCounter.getTickDelta(true) / 4, nametagAlpha, 1f);
             nametag = target.getDisplayName();

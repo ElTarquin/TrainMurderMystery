@@ -159,13 +159,10 @@ public class TMM implements ModInitializer {
 // TODO: Invisible note in hand + not in psychosis pool
 // TODO: fix spectators spawning another body
 // TODO: fix sleeping inside people
-// TODO: Indicate grenade does no damage to killers
-// TODO: Fix shower sound
 // TODO: Killers can see the mood of players
 // TODO: Heartbeat sanity low
 // TODO: Fix poison visual not getting removed
 // TODO: Fix blackout name not disappearing
 // TODO: psycho mode can shrug off one bullet
-// TODO: add barriers under ladders
 // TODO: add command to reset role weighting
 // TODO: fix name and sticky note render over each other if your cursor sees both

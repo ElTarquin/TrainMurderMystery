@@ -63,8 +63,8 @@ public class TrainMurderMysteryLangGen extends FabricLanguageProvider {
 
         builder.add("tip.cooldown", "On cooldown: %s");
         builder.add(TextUtils.getItemTranslationKey(TMMItems.KNIFE) + ".tooltip", "Hold for a second and get close to your victim\nAfter a kill, cannot be used for 1 minute\nAttack to knock back / push a player (no cooldown)");
-        builder.add(TextUtils.getItemTranslationKey(TMMItems.REVOLVER) + ".tooltip", "All it takes is five pounds of pressure\nDrops if you kill an innocent");
-        builder.add(TextUtils.getItemTranslationKey(TMMItems.GRENADE) + ".tooltip", "Explodes on impact once thrown\nGood to clear groups of people, does not affect killers\nSingle use, 5 minute cooldown");
+        builder.add(TextUtils.getItemTranslationKey(TMMItems.REVOLVER) + ".tooltip", "Just point and shoot\nDrops if you kill an innocent");
+        builder.add(TextUtils.getItemTranslationKey(TMMItems.GRENADE) + ".tooltip", "Explodes on impact once thrown, does not affect killers\nGood to clear groups of people\nSingle use, 5 minute cooldown");
         builder.add(TextUtils.getItemTranslationKey(TMMItems.PSYCHO_MODE) + ".tooltip", "Do you like hurting other people?\nHides your identity and allows you to go crazy with a bat for 30 seconds\nActivated instantly upon purchase, 5 minute cooldown");
         builder.add(TextUtils.getItemTranslationKey(TMMItems.POISON_VIAL) + ".tooltip", "Slip in food or drinks to poison the next pickup");
         builder.add(TextUtils.getItemTranslationKey(TMMItems.FIRECRACKER) + ".tooltip", "Detonates 30 seconds after being placed on ground\nGood to simulate gunshots and lure people");

@@ -15,10 +15,10 @@ import net.minecraft.world.BlockView;
 public class LedgeBlock extends HorizontalFacingBlock {
     public static final MapCodec<LedgeBlock> CODEC = createCodec(LedgeBlock::new);
 
-    protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0, 14, 0, 16, 16, 2);
-    protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(14, 14, 0, 16, 16, 16);
-    protected static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(0, 14, 14, 16, 16, 16);
-    protected static final VoxelShape WEST_SHAPE = Block.createCuboidShape(0, 14, 0, 2, 16, 16);
+    protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0, 14, 0, 16, 16, 6);
+    protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(10, 14, 0, 16, 16, 16);
+    protected static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(0, 14, 10, 16, 16, 16);
+    protected static final VoxelShape WEST_SHAPE = Block.createCuboidShape(0, 14, 0, 6, 16, 16);
 
     public LedgeBlock(Settings settings) {
         super(settings);

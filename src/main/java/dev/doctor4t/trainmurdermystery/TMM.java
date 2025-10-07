@@ -187,3 +187,4 @@ public class TMM implements ModInitializer {
 // POST VIDEO
 // TORECORD: Ability to customize time of day for supporters + snow density
 // TODO: Watermark?
+// TODO: Have knife be red on full charge only

@@ -337,7 +337,6 @@ public class TMMClient implements ClientModInitializer {
         if (target instanceof ItemEntity || target instanceof NoteEntity || target instanceof FirecrackerEntity) return 0xDB9D00;
         if (target instanceof PlayerEntity player) {
             if (GameFunctions.isPlayerSpectatingOrCreative(player)) return -1;
-            if (isPlayerSpectatingOrCreative()) return 0xFFFFFF;
             if (isKiller() && gameComponent.isKiller(player)) return MathHelper.hsvToRgb(0F, 1.0F, 0.6F);
             if (gameComponent.isCivilian(player)) {
                 var mood = PlayerMoodComponent.KEY.get(target).getMood();
@@ -349,6 +348,7 @@ public class TMMClient implements ClientModInitializer {
                     return 0x4EDD35;
                 }
             }
+            if (isPlayerSpectatingOrCreative()) return 0xFFFFFF;
         }
         return -1;
     }

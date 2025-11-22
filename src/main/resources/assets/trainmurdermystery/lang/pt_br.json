@@ -339,7 +339,9 @@
   "tip.letter.tooltip1": "%s para a sua viagem em 1º de Janeiro de 1923.",
   "tip.letter.tooltip2": "La Sirène deseja a você uma travessia agradável e segura.",
   "tmm.gui.reset": "Limpar",
+  "trainmurdermystery.midnightconfig.disableScreenShake": "Desabilita chacoalho de tela",
   "trainmurdermystery.midnightconfig.title": "The Last Voyage of the Harpy Express - Configuração",
   "trainmurdermystery.midnightconfig.ultraPerfMode": "Modo de Ultra Performance",
-  "trainmurdermystery.midnightconfig.ultraPerfMode.tooltip": "Desativa o cenário para uma experiência visual inferior, mas com desempenho máximo. Reduz a distância de renderização para 2."
+  "trainmurdermystery.midnightconfig.ultraPerfMode.tooltip": "Desativa o cenário para uma experiência visual inferior, mas com desempenho máximo. Reduz a distância de renderização para 2.",
+  "credits.trainmurdermystery.thank_you": "Obrigado por jogar The Last Voyage of the Harpy Express!\nEu e minha equipe dedicamos muito tempo a este mod\ne esperamos que você goste.\nSe quiser fazer um vídeo ou uma live, por favor \nlembre-se de creditar meu canal,\no vídeo e a página do mod!\n - RAT / doctor4t"
 }
